@@ -1,0 +1,78 @@
+/*.cryptocurrency {
+	padding: 1rem 2rem 2rem;
+	margin: 1rem;
+	border-radius: 0.5rem;
+	min-width: 9rem;
+	border: solid 1px rgbd(0,0,0,0.05);
+	max-width: 3px;
+	text-align: center;
+	align-items: center;
+
+}
+*/
+
+/* .cryptocurrency {
+	background-color: #fbe2c3;
+	padding: 1rem 2rem 2rem;
+	margin: 1rem;
+	border-radius: 0.5rem;
+	min-width: 9rem;
+	border: solid 1px rgbd(0,0,0,0.05);
+	max-width: 3px;
+	text-align: center;
+	align-items: center;
+
+} */
+
+.tickers {
+	display: flex;
+	align-items: stretch;
+	list-style-type: none;
+	padding: 0;
+	flex-wrap: wrap;
+	z-index: 5;
+	align-items: flex-start;
+}
+
+.cryptocurrency {
+	flex-grow: 1;
+	flex-shrink: 1;
+	background-color: #e1e8f0;
+	padding: 1rem 1rem 1rem;
+	margin: 1rem;
+	border-radius: 0.5rem;
+	min-width: 9rem;
+	border: solid 1px rgbd(0,0,0,0.05);
+	text-align: center;
+	align-items: center;
+}
+
+.positive {
+	border-bottom: solid 10px #5bb620;
+	border-right: solid 6px #5bb620;
+	box-shadow: 5px 5px 15px 5px #585858;
+}
+
+.negative {
+	border-bottom: solid 10px #b22222;
+	border-right: solid 6px #b22222;
+	box-shadow: 5px 5px 15px 5px #585858;
+}
+
+.price {
+	font-size: large;
+	font-weight: bold;
+}
+
+.cryptocurrency p {
+	color: rgba(0, 0, 0, 0.75);
+}
+
+.cryptocurrency-name {
+	font-size: 1.2rem;
+}
+
+.cryptocurrency-rank {
+	text-align: center;
+	font-weight: bold;
+}

@@ -5,9 +5,28 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  background: url(/img/brick-wall.jpg) no-repeat;
+  background-size: 100%;
+  background-position: bottom;
+  min-height: 100%;
+  background-color: #424242 !important;
+}
+
+form {
+  padding: 20px;
+  margin-top: 60px;
+}
+
+html {
+  min-height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.tickers {
+  width: 100% !important;
 }

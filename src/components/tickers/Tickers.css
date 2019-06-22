@@ -1,0 +1,12 @@
+.tickers {
+	list-style-type: none;
+	padding: 0;
+	display: inline-flex;
+	flex-wrap: wrap;
+    z-index: 5;
+    align-items: flex-start;
+}
+
+.tickerWrapper {
+	background-color: #bccbde;
+}
