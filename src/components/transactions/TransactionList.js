@@ -69,7 +69,7 @@ export default compose(
     { collection: 'transactions',
         doc: props.auth.uid,
         subcollections: [
-          { collection: 'transactions', orderBy: ['purchaseDate', 'desc'] },
+          { collection: 'transactions', limit: 3, orderBy: ['purchaseDate', 'desc'] },
         ],
         storeAs: 'personalTransactions'
       }    

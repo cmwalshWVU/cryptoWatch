@@ -1,4 +1,4 @@
-This is the work in progress of my cryptocurrency tracker project.  This project is currently hosted on firebase at https://crypto-watch-dbf71.web.app/ . 
+This is the work in progress of my cryptocurrency tracker project.  This project is currently hosted on netlify with continuous deployment set up to deploy to https://unruffled-knuth-55967d.netlify.com/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
