@@ -49,7 +49,6 @@ const mapStateToProps = (state) => {
   return {
     projects: state.firestore.ordered.projects,
     notifications: state.firestore.ordered.notifications,
-    transactions:  state.firestore.ordered.personalTransactions,
     auth: state.firebase.auth
   }
 }
@@ -59,12 +58,5 @@ export default compose(
   firestoreConnect(props => [
     { collection: 'projects', orderBy: ['createdAt', 'desc']  },
     { collection: 'notifications', limit: 3,  orderBy: ['time', 'desc'] },
-    { collection: 'transactions',
-        doc: props.auth.uid,
-        subcollections: [
-          { collection: 'transactions', orderBy: ['purchaseDate', 'desc'] },
-        ],
-        storeAs: 'personalTransactions'
-      }    
   ])
 )(Dashboard);
