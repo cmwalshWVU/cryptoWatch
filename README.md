@@ -1,3 +1,5 @@
+This is the work in progress of my cryptocurrency tracker project.  This project is currently hosted on firebase at https://crypto-watch-dbf71.web.app/ . 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
