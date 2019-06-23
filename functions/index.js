@@ -39,3 +39,19 @@ exports.userJoined = functions.auth.user()
         return createNotification(notification);
         });
 });
+
+exports.transactionRecorded = functions.firestore
+    .document('transactions/{userId}/transactions/{transactionId}')
+    .onCreate((rec, context) => {
+        const record = rec.data();
+        const type = record.isPurchase;
+        const purchase = (type == "on" ? "Purchase of" : "Sale of");
+        const notification = {
+            content:`${record.coin} at  $${record.dollarAmount}`,
+            user: purchase,
+            time: admin.firestore.FieldValue.serverTimestamp()
+
+        };
+    return createNotification(notification);
+        
+});
