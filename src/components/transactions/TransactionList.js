@@ -39,7 +39,7 @@ class TransactionList extends Component {
       <div className="section">
         <div className="card z-depth-0">
           <div className="card-content">
-            <span className="card-title">Transactions</span>
+            <span className="card-title">Transactions TEST</span>
             <ul className="Transactions">
                 { this.mapTransactions(transactions) }
             </ul>
