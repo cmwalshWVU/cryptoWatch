@@ -35,10 +35,10 @@ class CreateTransaction extends Component {
                         <h5 className="center grey-text text-darken-3">Record a New Transaction</h5>
                         <div class="switch">
                             <label>
-                                Buy 
+                                Sell
                                 <input id="isPurchase" onChange={this.handleChange} type="checkbox" />
                                 <span class="lever"></span>
-                                Sell
+                                Buy
                             </label>
                         </div>
                         <div className="input-field">
