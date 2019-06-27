@@ -47,7 +47,7 @@ class CreateTransaction extends Component {
                         </div>
                         <div className="input-field">
                             <label htmlFor="dollarAmount"> $ Amount: </label>
-                            <input id="dollarAmount" type="text" onChange={this.handleChange}></input>
+                            <input id="dollarAmount" type="number" onChange={this.handleChange}></input>
                         </div>
                         <div className="input-field">
                             Transaction Date:   
