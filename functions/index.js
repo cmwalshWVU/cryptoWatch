@@ -58,24 +58,28 @@ exports.transactionRecorded = functions.firestore
         console.log('userID ', context.params.userId)
         const record = rec.data();
         admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).get().then(doc => {
-            const isBuy = (record.isPurchase == "on" ? 1 : -1);
+            var isBuy = (record.isPurchase == "on" ? 1 : -1);
 
             if (doc.data()) {
-                var newHoldings = doc.data().dollarHoldings + (isBuy * record.dollarAmount);
+                var newHoldings = Number(doc.data().dollarHoldings) + (isBuy * Number(record.dollarAmount));
+                newHoldings = (newHoldings >= 0) ? newHoldings : 0;
                 console.log('Updating holdings document for  ' + record.coin);
                 console.log('coin ', doc.data().coin);
                 console.log('Old Amount ', doc.data().dollarHoldings);
                 console.log('New Amount ', newHoldings);
                 admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).update({
-                    dollarHoldings: newHoldings
+                    dollarHoldings: newHoldings,
+                    lastUpdated: new Date()
+
                   });
             }
             else {
                 console.log('No holdings document exists for ' + record.coin + ' creating new doc');
-                var holdings = ((record.dollarAmount * isBuy) <= 0 ? 0 : record.dollarAmount);
+                var holdings = (Number((record.dollarAmount) * isBuy) <= 0 ? 0 : Number(record.dollarAmount));
                 admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).set({
                     coin: record.coin,
-                    dollarHoldings: holdings
+                    dollarHoldings: holdings,
+                    lastUpdated: new Date()
                   });
             }
         }).catch(reason => {
@@ -93,23 +97,4 @@ exports.transactionRecorded = functions.firestore
         
     return createNotification(notification);     
 });
-
-// exports.transactionRecorded = functions.firestore
-//     .document('transactions/{userId}/transactions/{transactionId}')
-//     .onCreate((rec, context) => {
-//         console.log('context ', context)
-//         const record = rec.data();
-//         const purchase = (record.isPurchase == "on" ? 1 : 1);
-//         const currentHolding = admin.firestore().collection('holdings').doc(context.auth.uid).collection('holdings').doc(rec.coin).get();
-//         if (currentHolding == null) {
-
-//         }
-//         const holding = {
-//             coin: record.coin,
-//             price: record.dollarAmount,
-//             time: admin.firestore.FieldValue.serverTimestamp()
-
-//         };
-//     return createHolding(holding, context.auth.uid);     
-// });
 

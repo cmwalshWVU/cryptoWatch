@@ -7,6 +7,7 @@ import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import Tickers from '../tickers/tickers.js';
 import TransactionList from '../transactions/TransactionList';
+import HoldingsList from '../holdings/HoldingsList';
 
 class Dashboard extends Component {
 
@@ -32,7 +33,7 @@ class Dashboard extends Component {
               </div>
               <div className="col s12 m5 offset-m1">
                 <TransactionList />
-
+                <HoldingsList />
                 <Notifications notifications={notifications}/>
               </div>
             </div>
