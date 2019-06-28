@@ -18,10 +18,15 @@ class HoldingsList extends Component {
         personalHoldings = noData;
     }
     else {
-        personalHoldings = holdings.map((holding) => 
+        var totalHoldings = holdings.reduce((a, b) => a + (b['dollarHoldings'] || 0), 0);
+        personalHoldings = holdings.filter(mem => mem.dollarHoldings > 0).map((holding) => 
           <li key={holding.id}>
             <span className="green-text">{holding.coin} </span>
             <span> ${holding.dollarHoldings}</span>
+            <div className="grey-text note-date">
+                %{(holding.dollarHoldings/totalHoldings).toFixed(2) * 100} Total Holding
+            </div>
+
           </li>
       );
     }
