@@ -5,6 +5,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import '../../styles/card.css'
 
 class TransactionList extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class TransactionList extends Component {
 
     return (
       <div className="section">
-        <div className="card z-depth-0">
+        <div className="rounded-card card z-depth-0">
           <div className="card-content">
             <span className="card-title">Transactions</span>
             <ul className="Transactions">

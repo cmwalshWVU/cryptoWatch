@@ -24,7 +24,7 @@ class HoldingsList extends Component {
             <span className="green-text">{holding.coin} </span>
             <span> ${holding.dollarHoldings}</span>
             <div className="grey-text note-date">
-                %{(holding.dollarHoldings/totalHoldings).toFixed(2) * 100} Total Holding
+                {(holding.dollarHoldings/totalHoldings).toFixed(2) * 100}% Total Holding
             </div>
 
           </li>
@@ -37,16 +37,10 @@ class HoldingsList extends Component {
     const {  holdings, auth } = this.props;
 
     return (
-      <div className="section">
-        <div className="card z-depth-0">
-          <div className="card-content">
-            <span className="card-title">Holdings</span>
+     
             <ul className="Holdings">
                 { this.mapHoldings(holdings) }
-            </ul>
-          </div>
-        </div>
-      </div>
+            </ul>        
     )
   }
 }

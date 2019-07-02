@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom';
 import Tickers from '../tickers/tickers.js';
 import TransactionList from '../transactions/TransactionList';
 import HoldingsList from '../holdings/HoldingsList';
+import HoldingsChart from '../holdings/HoldingsChart';
 
 class Dashboard extends Component {
 
@@ -32,8 +33,8 @@ class Dashboard extends Component {
                 <ProjectList projects={projects} />
               </div>
               <div className="col s12 m5 offset-m1">
+                <HoldingsChart />
                 <TransactionList />
-                <HoldingsList />
                 <Notifications notifications={notifications}/>
               </div>
             </div>

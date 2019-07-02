@@ -1,12 +1,13 @@
 import React from 'react'
 import { isTemplateElement } from '@babel/types';
 import moment from 'moment';
+import '../../styles/card.css';
 
 const Notifications = ( props ) => {
   const {notifications} = props;
   return (
     <div className="section">
-      <div className="card z-depth-0">
+      <div className="rounded-card card z-depth-0">
         <div className="card-content">
           <span className="card-title">Notifications</span>
           <ul className="Notifications">
