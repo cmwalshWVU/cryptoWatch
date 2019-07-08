@@ -14,7 +14,7 @@ class HoldingsList extends Component {
 
   mapHoldings = (holdings) => {
     let personalHoldings = []
-    if (holdings === undefined || holdings.length == 0 ) {
+    if (holdings === undefined || holdings.length === 0 ) {
         personalHoldings = noData;
     }
     else {

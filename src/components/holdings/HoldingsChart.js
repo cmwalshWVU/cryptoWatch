@@ -53,7 +53,7 @@ class HoldingsChart extends Component {
     }
 
     mapHoldings = (holdings) => {
-      if (holdings === undefined || holdings.length === 0 || holdings.filter(mem => mem.dollarHoldings > 0).length   == 0) {
+      if (holdings === undefined || holdings.length === 0 || holdings.filter(mem => mem.dollarHoldings > 0).length   === 0) {
           return noData;
       }
       else {
