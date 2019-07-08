@@ -39,7 +39,7 @@ class GraphModal extends Component {
 
   render() {
     let clazz = this.props.ticker + " modal-content";
-    let modalClazz = this.props.ticker + " modal";
+    let modalClazz = "rounded " + this.props.ticker + " modal";
     return (
       <>
         <div className="right-align">

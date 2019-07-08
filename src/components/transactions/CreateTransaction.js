@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { recordTransaction } from '../store/actions/transactionAction';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
+import '../../styles/card.css';
 
 class CreateTransaction extends Component {
     state = {
@@ -30,11 +31,11 @@ class CreateTransaction extends Component {
         }
         else {
             return (
-                <div className="container">
+                <div className="rounded-card container">
                     <form onSubmit={this.handleSubmit} className="white">
                         <h5 className="center grey-text text-darken-3">Record a New Transaction</h5>
-                        <div class="switch">
-                            <label>
+                        <div className="buyOrSell switch">
+                            <label className="buyOrSellLabel">
                                 Sell
                                 <input id="isPurchase" onChange={this.handleChange} type="checkbox" />
                                 <span class="lever"></span>
@@ -50,10 +51,8 @@ class CreateTransaction extends Component {
                             <input id="dollarAmount" type="number" onChange={this.handleChange}></input>
                         </div>
                         <div className="input-field">
-                            Transaction Date:   
-                            <input placeholder="Start Date"
-                                id="transactionDate" className="datepicker" type="date" value={this.state.transactionDate}
-                                onSelect={this.handleStateChange.bind(this)} onChange={this.handleChange} />
+                            <label htmlFor="numberOfCoins"># of Coins: </label>
+                            <input id="numberOfCoins" type="number" onChange={this.handleChange}></input>
                         </div>
                         <div class="switch">
                             <label>

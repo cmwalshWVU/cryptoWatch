@@ -13,7 +13,7 @@ const ProjectDetails = (props) => {
   else if (project) {
     return (
       <div className="container section project-details">
-        <div className="card z-depth-0">
+        <div className="rounded-card card z-depth-0">
           <div className="card-content">
             <span className="card-title">
               { project.title }

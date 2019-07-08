@@ -69,7 +69,7 @@ class HoldingsChart extends Component {
         const {  holdings } = this.props;
 
         return (
-            <div className="section">
+            <div className="dashboard-section section">
             <div className="rounded-card card z-depth-0">
             <div className="card-content">
                 <span className="card-title">Holdings</span>
