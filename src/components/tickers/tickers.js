@@ -3,6 +3,8 @@ import './Tickers.css';
 import Cryptocurrency from './cryptocurrency';
 import axios from 'axios';
 import moment from 'moment';
+import * as cryptoActions from '../store/actions/cryptoActions';
+import { connect } from 'react-redux';
 
 class Tickers extends Component {
 
@@ -157,8 +159,8 @@ class Tickers extends Component {
 	}
 
 	render() {
-
-		var tickers = this.state.data.map((currency) =>
+		var tickerData = this.props.tickerData == null ? this.state.data : this.props.tickerData;
+		var tickers = tickerData.map((currency) =>
 			<Cryptocurrency data={currency} key={currency.id} ticker={currency.symbol} />
 		);
 
@@ -172,4 +174,17 @@ class Tickers extends Component {
 	}
 }
 
-export default Tickers;
+// const mapDispatchToProps = (dispatch) => {
+// 	return {
+// 	  getCurrentData: () => dispatch(cryptoActions.getCurrentData())
+// 	}
+//   }
+
+const mapStateToProps = (state) => {
+	console.log(state);
+	return {
+		tickerData: state.tickerData,
+	}
+}
+
+export default connect(mapStateToProps, cryptoActions)(Tickers);
