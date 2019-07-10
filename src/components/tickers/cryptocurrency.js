@@ -20,7 +20,6 @@ class Cryptocurrency extends Component {
 		// var rsiTicker = <Rsi data={props}  />;
 		let graph = <GraphModal name={name} ticker={this.props.ticker} chartData={null} />;
 	return (
-
 		<li className={"cryptocurrency " + (percent_change_1h.indexOf("-") === -1? "positive" : "negative")}>
 			<div className="wrapper">
 				<span className="cryptocurrency-name">{name} ({symbol})</span> <br />
@@ -30,9 +29,6 @@ class Cryptocurrency extends Component {
 				{graph}
 			</div>
 		</li>
-
-		
-	
 	)
 	}
 }
