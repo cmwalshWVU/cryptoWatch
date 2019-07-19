@@ -22,8 +22,8 @@ class TransactionList extends Component {
     else {
       personalTransactions = transactions.map((transaction) => 
           <li key={transaction.id}>
-            <span className={transaction.isPurchase == 'on' ? "green-text" : "red-text"}>{transaction.coin} </span>
-            <span> ${transaction.dollarAmount}</span>
+            <span className={transaction.isPurchase == 'on' ? "green-text" : "red-text"}>{transaction.coin}: </span>
+            <span> {transaction.dollarAmount != undefined ? '$' + transaction.dollarAmount : transaction.numberOfCoins}</span>
             <div className="grey-text note-date">
               {moment(transaction.purchaseDate.toDate()).fromNow()}
             </div>

@@ -14,7 +14,7 @@ class BitcoinService {
       .then((response) => response.data, (error) => error.response.status);
 
 
-  static getRsiData = ( ticker, interval ) =>
+  static getData = ( ticker, interval ) =>
   	axios
   		.get('https://min-api.cryptocompare.com/data/histominute?fsym=${ticker}&tsym=USD&limit=14&aggregate=${interval}&e=CCCAGG', {})
   		.then((response) => response.data, (error) => error.response.status);

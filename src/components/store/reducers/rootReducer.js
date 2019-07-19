@@ -1,5 +1,6 @@
 import authReducer from './authReducer';
 import cryptoReducer from './cryptoReducer';
+import CurrentPriceReducer from './CurrentPriceReducer';
 import graphReducer from './graphReducer';
 import projectReducer from './projectReducer';
 import transactionReducer from './transactionReducer';
@@ -10,6 +11,7 @@ import { firebaseReducer } from 'react-redux-firebase';
 const rootReducer = combineReducers({
     auth: authReducer,
     crypto: cryptoReducer,
+    currentPrices: CurrentPriceReducer,
     graph: graphReducer,
     project: projectReducer,
     transaction: transactionReducer,

@@ -60,9 +60,10 @@ exports.transactionRecorded = functions.firestore
         admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).get().then(doc => {
             var isBuy = (record.isPurchase == "on" ? 1 : -1);
 
-            if (doc.data()) {
+            if (doc.data() && record.dollarHoldings != undefined && record.numberOfCoins == undefined) {
                 var newHoldings = Number(doc.data().dollarHoldings) + (isBuy * Number(record.dollarAmount));
                 newHoldings = (newHoldings >= 0) ? newHoldings : 0;
+                console.log('BLOCK 1');
                 console.log('Updating holdings document for  ' + record.coin);
                 console.log('coin ', doc.data().coin);
                 console.log('Old Amount ', doc.data().dollarHoldings);
@@ -70,10 +71,25 @@ exports.transactionRecorded = functions.firestore
                 admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).update({
                     dollarHoldings: newHoldings,
                     lastUpdated: new Date()
+                  });
+            }
+            else if (doc.data() && record.numberOfCoins != undefined) {
+                var newHoldings = Number(doc.data().numberOfCoins) + (isBuy * Number(record.numberOfCoins));
+                newHoldings = (newHoldings >= 0) ? newHoldings : 0;
+                console.log('BLOCK 2');
+                console.log('Updating holdings document for  ' + record.coin);
+                console.log('coin ', doc.data().coin);
+                console.log('Old Amount ', doc.data().numberOfCoins);
+                console.log('New Amount ', newHoldings);
+                admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).update({
+                    numberOfCoins: newHoldings,
+                    lastUpdated: new Date()
 
                   });
             }
-            else {
+            else if (record.dollarHoldings != undefined) {
+                console.log('BLOCK 3');
+
                 console.log('No holdings document exists for ' + record.coin + ' creating new doc');
                 var holdings = (Number((record.dollarAmount) * isBuy) <= 0 ? 0 : Number(record.dollarAmount));
                 admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).set({
@@ -82,19 +98,39 @@ exports.transactionRecorded = functions.firestore
                     lastUpdated: new Date()
                   });
             }
+            else if (record.numberOfCoins != undefined) {
+                console.log('BLOCK 4');
+
+                console.log('No holdings document exists for ' + record.coin + ' creating new doc');
+                var holdings = (Number((record.numberOfCoins) * isBuy) <= 0 ? 0 : Number(record.numberOfCoins));
+                console.log('New Amount ', holdings);
+
+                admin.firestore().collection('holdings').doc(context.params.userId).collection('holdings').doc(record.coin).set({
+                    coin: record.coin,
+                    numberOfCoins: holdings,
+                    lastUpdated: new Date()
+                  });
+            }
         }).catch(reason => {
             console.log('error ', reason)
         });
 
         const type = record.isPurchase;
-        const purchase = (type == "on" ? "Purchase of" : "Sale of");
+        let purchase;
+        let content;
+        if (record.dollarAmount != undefined) {
+            purchase = (type == "on" ? "Purchase of" : "Sale of");
+            content = `${record.coin} at $${record.dollarAmount}`;
+        }
+        else {
+            purchase = (type == "on" ? "Purchase:" : "Sale:");
+            content = `${record.numberOfCoins} ${record.coin}`;
+        }
         const notification = {
-            content:`${record.coin} at  $${record.dollarAmount}`,
+            content: content,
             user: purchase,
             time: admin.firestore.FieldValue.serverTimestamp()
-
         };
-        
-    return createNotification(notification);     
+        return createNotification(notification); 
 });
 

@@ -13,3 +13,23 @@
     line-height: 1.17;
     letter-spacing: 0.00735em;
 }
+
+.button {
+    height: 100%;
+    box-shadow: none !important;
+    background-color: #536DFE !important;
+    color: white !important;
+    padding: 0px !important;
+}
+
+.button:hover {
+    background-color: #4A4A4A !important;
+}
+
+.blackText {
+    color: black;
+}
+
+.paddingRight {
+    padding-right: 5px;
+}

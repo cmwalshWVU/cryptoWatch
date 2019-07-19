@@ -11,15 +11,14 @@ class Tickers extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: [
-			],
+			data: [],
 			updateHistory: true
 		};
 	}
 
 	componentDidMount() {
 		this.props.getCurrentData();
-		// this.interval = setInterval(() => this.fetchCryptocurrenncyData(), 30 * 1000);
+		this.interval = setInterval(() => this.props.getCurrentData(), 30 * 1000);
 	}
 
 	lastUpdated() {

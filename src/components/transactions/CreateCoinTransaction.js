@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import '../../styles/card.css';
 
-class CreateTransaction extends Component {
+class CreateCoinTransaction extends Component {
     state = {
+        
     }
 
     handleChange = (e) => {
@@ -32,12 +33,12 @@ class CreateTransaction extends Component {
             return (
                 <div className="rounded-card container">
                     <form onSubmit={this.handleSubmit} className="white">
-                        <h5 className="center grey-text text-darken-3">New Transaction: Dollar</h5>
+                        <h5 className="center grey-text text-darken-3">New Transaction: Coin</h5>
                         <div className="buyOrSell switch">
                             <label className="buyOrSellLabel">
                                 Sell
                                 <input id="isPurchase" onChange={this.handleChange} type="checkbox" />
-                                <span class="lever"></span>
+                                <span className="lever"></span>
                                 Buy
                             </label>
                         </div>
@@ -46,8 +47,8 @@ class CreateTransaction extends Component {
                             <input type="text" id="coin" onChange={this.handleChange}/>
                         </div>
                         <div className="input-field">
-                            <label htmlFor="dollarAmount" step="any"> $ Amount: </label>
-                            <input id="dollarAmount" type="number" onChange={this.handleChange}></input>
+                            <label htmlFor="numberOfCoins"># of Coins: </label>
+                            <input id="numberOfCoins" type="number" step="any" onChange={this.handleChange}></input>
                         </div>
                         <div className="input-field">
                             <button className="btn pink lighten-1 z-depth-0">Record</button>
@@ -72,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTransaction);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCoinTransaction);
