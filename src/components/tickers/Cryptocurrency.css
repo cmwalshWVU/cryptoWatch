@@ -40,7 +40,7 @@
 
 .cryptocurrency-name {
 	font-size: 1.3rem;
-	border-bottom: solid .5px;
+	/* border-bottom: solid .5px; */
 	font-family: 'Roboto'
 }
 
