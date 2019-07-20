@@ -4,7 +4,7 @@ export const recordTransaction = (transaction) => {
     return(dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
         const authorId = getState().firebase.auth.uid;
-        if (transaction.dollarAmount != undefined) {
+        if (transaction.dollarAmount !== undefined) {
             axios.get("https://api.coinmarketcap.com/v1/ticker/?limit=100")
                 .then(response => {
                     var currentPrice = response.data.filter(currency => transaction.coin === currency.symbol.toUpperCase())[0].price_usd;

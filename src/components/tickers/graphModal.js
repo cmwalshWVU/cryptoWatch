@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import M from "materialize-css";
 import './graph.css';
 import PriceHistoryChart from './PriceHistoryChart';
-import BitcoinService from './bitcoinService';
-import axios from 'axios';
 
 class GraphModal extends Component {
 

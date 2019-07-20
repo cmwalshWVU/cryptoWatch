@@ -7,13 +7,21 @@ import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import Tickers from '../tickers/tickers.js';
 import TransactionList from '../transactions/TransactionList';
-import HoldingsList from '../holdings/HoldingsList';
 import Holdings from '../holdings/Holdings';
+import { getCurrentPrices } from '../store/actions/currentPriceAction';
+import { getCurrentData } from '../store/actions/cryptoActions';
 
 class Dashboard extends Component {
 
+  componentDidMount() {
+    this.props.getCurrentPrices();
+    // this.props.getCurrentData();
+    // this.interval = setInterval(() => this.props.getCurrentData(), 30 * 1000);
+    this.interval = setInterval(() => this.props.getCurrentPrices(), 30 * 1000);
+  }
+
   render() {
-    const { projects, notifications, transactions, auth } = this.props;
+    const { projects, notifications, auth } = this.props;
 
     if (!auth.uid) {
       return <Redirect to='/signin' />
@@ -56,7 +64,7 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, {getCurrentPrices, getCurrentData}),
   firestoreConnect(props => [
     { collection: 'projects', orderBy: ['createdAt', 'desc']  },
     { collection: 'notifications', limit: 3,  orderBy: ['time', 'desc'] },

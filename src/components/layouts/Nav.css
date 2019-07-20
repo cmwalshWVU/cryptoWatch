@@ -33,3 +33,17 @@
 .paddingRight {
     padding-right: 5px;
 }
+
+.right {
+    zoom: 1.1;
+}
+
+.logo {
+    position: absolute !important;
+    left: auto !important;
+    position: absolute;
+    color: #fff;
+    display: inline-block;
+    font-size: 2.1rem;
+    padding: 0;
+}

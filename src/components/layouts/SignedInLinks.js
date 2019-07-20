@@ -8,15 +8,9 @@ import './Nav.css';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-
-const ITEM_HEIGHT = 48;
 
 const SignedInLinks = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorElTransactions, setAnchorElTransactions] = React.useState(null);
   const [anchorElStyled, setAnchorElStyled] = React.useState(null);
 
   function handleClickStyled(event) {
@@ -27,23 +21,12 @@ const SignedInLinks = (props) => {
     setAnchorElStyled(null);
   }
 
-  const open = Boolean(anchorEl);
-  const openTransactions = Boolean(anchorElTransactions);
-
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
 
-  function handleClickTransactions(event) {
-    setAnchorElTransactions(event.currentTarget);
-  }
-
   function handleClose() {
     setAnchorEl(null);
-  }
-
-  function handleCloseTransactions() {
-    setAnchorElTransactions(null);
   }
 
   const StyledMenuItem = withStyles(theme => ({
@@ -77,7 +60,6 @@ const SignedInLinks = (props) => {
     />
   ));
 
-
   return (
     <ul className="right">
       <li>
@@ -110,7 +92,6 @@ const SignedInLinks = (props) => {
               <ListItemIcon>
                 <i className="material-icons Small paddingRight ">copyright</i>
                 Transaction
-
               </ListItemIcon>
             </NavLink>
           </StyledMenuItem>
@@ -119,7 +100,6 @@ const SignedInLinks = (props) => {
               <ListItemIcon>
                 <i className="material-icons Small">attach_money</i>
                 Transaction
-
               </ListItemIcon>
             </NavLink>
           </StyledMenuItem>
@@ -132,7 +112,32 @@ const SignedInLinks = (props) => {
         >
         {props.profile.initials}
         </div>
-        <Menu
+        <StyledMenu
+          id="customized-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <div >
+            <h3 className="name" >{props.profile.firstName} {props.profile.lastName}</h3>
+            <h4 className="name"> {props.profile.email}</h4>
+          </div>
+          <hr/>
+          <MenuItem key="home">
+            <ListItemIcon>
+              <i className="material-icons Small paddingRight">home</i>
+              <NavLink className="blackText" to="/"><span> Home</span></NavLink>
+            </ListItemIcon>
+          </MenuItem>
+          <MenuItem key={signOut}  onClick={props.signOut} >
+            <ListItemIcon>
+              <i className="material-icons Small paddingRight">exit_to_app</i>
+              Sign Out
+            </ListItemIcon>
+          </MenuItem>
+        </StyledMenu>
+        {/* <Menu
           id="long-menu"
           anchorEl={anchorEl}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center'}}
@@ -142,7 +147,7 @@ const SignedInLinks = (props) => {
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200,
+              width: 150,
             },
           }}
         >
@@ -150,14 +155,18 @@ const SignedInLinks = (props) => {
               <h3 className="name" >{props.profile.firstName} {props.profile.lastName}</h3>
               <h4 className="name"> {props.profile.email}</h4>
             </div>
+            <hr/>
             <MenuItem key="home">
-              <NavLink className="blackText" to="/"><span>Home</span></NavLink>
+              <ListItemIcon>
+                <i className="material-icons Small">home</i>
+                <NavLink className="blackText" to="/"><span> Home</span></NavLink>
+              </ListItemIcon>
             </MenuItem>
             <MenuItem key={signOut}  onClick={props.signOut} >
               <span>SignOut</span>
             </MenuItem>
             
-        </Menu>
+        </Menu> */}
       </li>
     </ul>
   )

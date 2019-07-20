@@ -1,6 +1,4 @@
 import React, { Component }  from 'react';
-import TransactionSummary from './TransactionSummary';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -16,14 +14,14 @@ class TransactionList extends Component {
 
   mapTransactions = (transactions) => {
     let personalTransactions = []
-    if (transactions === undefined || transactions.length == 0 ) {
+    if (transactions === undefined || transactions.length === 0 ) {
       personalTransactions = noData;
     }
     else {
       personalTransactions = transactions.map((transaction) => 
           <li key={transaction.id}>
-            <span className={transaction.isPurchase == 'on' ? "green-text" : "red-text"}>{transaction.coin}: </span>
-            <span> {transaction.dollarAmount != undefined ? '$' + transaction.dollarAmount : transaction.numberOfCoins}</span>
+            <span className={transaction.isPurchase === 'on' ? "green-text" : "red-text"}>{transaction.coin}: </span>
+            <span> {transaction.dollarAmount !== undefined ? '$' + transaction.dollarAmount : transaction.numberOfCoins}</span>
             <div className="grey-text note-date">
               {moment(transaction.purchaseDate.toDate()).fromNow()}
             </div>
@@ -34,7 +32,7 @@ class TransactionList extends Component {
   }
 
   render() {
-    const {  transactions, auth } = this.props;
+    const {  transactions } = this.props;
 
     return (
       <div className="dashboard-section section">

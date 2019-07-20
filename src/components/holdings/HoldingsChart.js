@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../../styles/card.css';
-import axios from 'axios';
-import { getCurrentPrices } from '../store/actions/currentPriceAction';
+import moment from 'moment';
 
 class HoldingsChart extends Component {
       
@@ -37,10 +36,6 @@ class HoldingsChart extends Component {
         }
       this.mapTickerHoldings = this.mapTickerHoldings.bind(this);
     }
-  
-    componentDidMount() {
-		this.props.getCurrentPrices(this.props.tickers);
-	}
 
     mapTickerHoldings() {
         if (this.props.currentPrices === undefined || this.props.currentPrices.length === 0 || this.props.holdings === undefined) {
@@ -66,13 +61,17 @@ class HoldingsChart extends Component {
             return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} height="350" type="pie" />
         }
     }
+
+    lastUpdated() {
+	    return moment().format("lll");
+	}
     
     render() {
-        this.props.getCurrentPrices(this.props.tickers);
 
         return (
             <div className="card-content">
-                <span className="card-title">Holdings</span>
+                <span className="card-title"><center>Holdings: ${this.props.total.toFixed(2)}</center></span>
+                <span><center>{this.lastUpdated()}</center></span>
                 { this.mapTickerHoldings() }
                 {/* <HoldingsList /> */}
             </div>
@@ -94,7 +93,7 @@ const mapStateToProps = (state) => {
 }
     
 export default compose(
-    connect(mapStateToProps, {getCurrentPrices}),
+    connect(mapStateToProps),
     firestoreConnect(props => [
     { collection: 'holdings',
         doc: props.auth.uid,

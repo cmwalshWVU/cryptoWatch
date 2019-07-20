@@ -1,4 +1,3 @@
-import SignedOutLinks from "../../layouts/SignedOutLinks";
 
 export const signIn = (credentials) => {
     return (dispatch, getState, { getFirebase }) => {

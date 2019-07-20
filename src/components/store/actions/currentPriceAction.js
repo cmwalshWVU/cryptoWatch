@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-export function getCurrentPrices(tickers) {
+export function getCurrentPrices() {
     return(dispatch) =>{
         return axios.get("https://api.coinmarketcap.com/v1/ticker/?limit=100")
             .then(response => {
-                var result = response.data.filter(currency => tickers.includes(currency.symbol.toUpperCase()));
-                dispatch(updateCurrentPrices(result));
+                dispatch(updateCurrentPrices(response.data));
             })
             .catch(err => console.log(err));
     }

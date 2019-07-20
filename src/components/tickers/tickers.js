@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './Tickers.css';
 import Cryptocurrency from './cryptocurrency';
-import axios from 'axios';
 import moment from 'moment';
-import { getCurrentData } from '../store/actions/cryptoActions';
 import { connect } from 'react-redux';
 
 class Tickers extends Component {
@@ -16,18 +14,16 @@ class Tickers extends Component {
 		};
 	}
 
-	componentDidMount() {
-		this.props.getCurrentData();
-		this.interval = setInterval(() => this.props.getCurrentData(), 30 * 1000);
-	}
-
 	lastUpdated() {
 	    return moment().format("llll");
 	}
 
 	render() {
-		var tickerData = this.props.tickerData == null ? this.state.data : this.props.tickerData;
-		var tickers = tickerData.map((currency) =>
+		var tickerData = this.props.currentPrices == null ? this.state.data : this.props.currentPrices;
+		var top10 = tickerData.filter(currency => currency.rank <= 8);
+		// var wanted = ["bitcoin", "ethereum", "litecoin", "ripple", "neo", "eos", "stellar"];
+		// var result = tickerData.filter(currency => wanted.includes(currency.id));
+		var tickers = top10.map((currency) =>
 			<Cryptocurrency data={currency} key={currency.id} ticker={currency.symbol} />
 		);
 
@@ -35,7 +31,6 @@ class Tickers extends Component {
             <div >
                 <ul className="tickers">{!this.state.isLoading ? tickers : null}</ul>
             </div>
-            
 		);
 	}
 }
@@ -43,8 +38,8 @@ class Tickers extends Component {
 const mapStateToProps = (state) => {
 	console.log(state);
 	return {
-		tickerData: state.crypto.tickerData,
+		currentPrices: state.currentPrices.currentPrices,
 	}
 }
 
-export default connect(mapStateToProps, {getCurrentData})(Tickers);
+export default connect(mapStateToProps)(Tickers);

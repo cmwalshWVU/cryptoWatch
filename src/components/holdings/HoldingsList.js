@@ -1,6 +1,4 @@
 import React, { Component }  from 'react';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -34,20 +32,20 @@ class HoldingsList extends Component {
   }
 
   render() {
-    const {  holdings, auth } = this.props;
+    const {  holdings } = this.props;
 
     return (
-     
-            <ul className="Holdings">
-                { this.mapHoldings(holdings) }
-            </ul>        
-    )
+      <ul className="Holdings">
+          { this.mapHoldings(holdings) }
+      </ul>        
+    );
   }
 }
 
-const noData = (<li key="someData">
-    <span >No Personal Holdings </span>
-    </li>);
+const noData = (
+  <li key="someData">
+    <span>No Personal Holdings </span>
+  </li>);
 
 
 const mapStateToProps = (state) => {

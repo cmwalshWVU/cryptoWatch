@@ -1,12 +1,10 @@
 import React, { Component }  from 'react';
-import ReactApexChart from "react-apexcharts";
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import HoldingsList from './HoldingsList';
 import '../../styles/card.css';
 import HoldingsChart from './HoldingsChart';
-import { getCurrentPrices } from '../store/actions/currentPriceAction';
 
 class Holdings extends Component {
       
@@ -51,28 +49,6 @@ class Holdings extends Component {
         return mapping;
     }
 
-    // mapTickerHoldings = (holdings) => {
-    //   if (this.props.currentPrices === undefined || this.props.currentPrices.length === 0 || this.props.holdings === undefined) {
-    //       return noData;
-    //   }
-    //   else {
-    //       let mapping = [];
-    //       let options = this.state.options;
-    //       mapping.options = options;
-    //       mapping.series = [];
-    //       options.labels = [];
-
-    //       this.props.holdings.map(coin => {
-    //           let coins = coin.numberOfCoins;
-    //           var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd).toFixed(2);
-    //           mapping.options.labels.push(coin.coin);
-    //           mapping.series.push(total);
-    //       });
-          
-    //       return <HoldingsChart className="chart" mapping={mapping} height="350" type="pie" />
-    //     }
-    // }
-
     displayChart = (holdings) => {
         if (holdings === undefined || holdings.length === 0 || holdings.filter(mem => mem.numberOfCoins > 0).length   === 0) {
             return noData;
@@ -81,48 +57,53 @@ class Holdings extends Component {
             
             let series = holdings.filter(mem => mem.numberOfCoins > 0).map(coin => coin.numberOfCoins);
             let tickers = holdings.filter(mem => mem.numberOfCoins > 0).map(a => a.coin);
-            
-            
-            // var totalHoldings = holdings.reduce((a, b) => a + (b['dollarHoldings'] || 0), 0);       
-          
-            // let mapping = this.getData(holdings, totalHoldings);   
-            return <HoldingsChart className="chart" tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
+            var totalHoldings = 0;
+            this.props.holdings.map(coin => {
+              let coins = coin.numberOfCoins;
+              var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
+              if (currentPrice != null) {
+                  totalHoldings += Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
+              }
+          });
+
+          return <HoldingsChart className="chart" total={totalHoldings} tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
         }
     }
 
     render() {
-        const {  holdings } = this.props;
+      const {  holdings } = this.props;
 
-        return (
-            <div className="dashboard-section section">
-            <div className="rounded-card card z-depth-0">
-                { this.displayChart(holdings) }
-                {/* <HoldingsList /> */}
-            </div>
+      return (
+          <div className="dashboard-section section">
+          <div className="rounded-card card z-depth-0">
+              { this.displayChart(holdings) }
+              {/* <HoldingsList /> */}
+          </div>
         </div>
       )};
 }
 
 
-const noData = (<li key="someData">
+const noData = (
+  <li key="someData">
    <div className="card-content">
-                <span className="card-title">Holdings</span>
-                <span >No Personal Holdings </span>
-                {/* <HoldingsList /> */}
-            </div>
-    </li>);
+      <span className="card-title">Holdings</span>
+      <span >No Personal Holdings </span>
+    </div>
+  </li>);
 
 
 const mapStateToProps = (state) => {
   console.log(state);
   return {
     holdings:  state.firestore.ordered.personalHoldings,
+    currentPrices: state.currentPrices.currentPrices,
     auth: state.firebase.auth
   }
 }
 
 export default compose(
-  connect(mapStateToProps, {getCurrentPrices}),
+  connect(mapStateToProps),
   firestoreConnect(props => [
     { collection: 'holdings',
         doc: props.auth.uid,

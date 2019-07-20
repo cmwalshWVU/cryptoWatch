@@ -1,8 +1,6 @@
-import React, {Component} from "react";
+import React from "react";
 import CandleStickChart from 'react-apexcharts';
 import './PriceHistoryChart.css';
-import BitcoinService from './bitcoinService';
-import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import {getGraphData} from '../store/actions/graphAction';
@@ -53,7 +51,7 @@ class PriceHistoryChart extends React.Component {
     
     render() {
         let prices = []
-        if(this.props.graphData == undefined) {
+        if(this.props.graphData === undefined) {
             let data = [{
                 x: new Date(0),
                 y: [0, 0, 0, 0]
