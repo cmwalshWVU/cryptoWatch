@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Notifications from './Notifications';
-import ProjectList from '../projects/ProjectList';
+import ArticleList from '../newsArticles/articleList';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -38,7 +38,7 @@ class Dashboard extends Component {
               <div >  
               </div>
               <div className="col s12 m6">
-                <ProjectList projects={projects} />
+                <ArticleList  />
               </div>
               <div className="col s12 m5 offset-m1">
                 <Holdings />

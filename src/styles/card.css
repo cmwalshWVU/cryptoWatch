@@ -27,3 +27,11 @@
 .buyOrSellLabel {
     font-size: 12px;
 }
+
+.thumbnail {
+    float: right;
+    border-radius: 6px;
+    display: flex;
+    max-width: 20%;
+  justify-content: center;
+}

@@ -85,12 +85,10 @@ class Holdings extends Component {
 
 
 const noData = (
-  <li key="someData">
    <div className="card-content">
       <span className="card-title">Holdings</span>
       <span >No Personal Holdings </span>
-    </div>
-  </li>);
+    </div>);
 
 
 const mapStateToProps = (state) => {
