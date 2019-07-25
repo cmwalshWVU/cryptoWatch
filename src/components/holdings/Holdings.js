@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import HoldingsList from './HoldingsList';
 import '../../styles/card.css';
 import HoldingsChart from './HoldingsChart';
+import ReactApexChart from "react-apexcharts";
 
 class Holdings extends Component {
       
@@ -13,22 +14,36 @@ class Holdings extends Component {
 
       this.state = {
         options: {
-            tooltip: {
-                enabled: true,
-                style: {
-                    fontSize: '20px',
-                },
-                y: {
-                  formatter: function(val) {
-                    return "$" + val
-                  }
-                }
+          chart: {
+              height: 'auto',
             },
-            legend: {
-                position: 'bottom',
-                    fontSize: '20px',
-            }
-          }
+            responsive: [{
+              breakpoint: 1000,
+              options: {
+                chart: {
+                  width: '100%'
+                }
+              }
+            }],
+          tooltip: {
+              enabled: true,
+              style: {
+                  fontSize: '20px',
+              },
+              y: {
+                formatter: function(val) {
+                  return "$" + val
+                }
+              }
+          },
+          legend: {
+              position: 'bottom',
+                  fontSize: '20px',
+          },
+          fill: {
+              type: 'gradient',
+          },
+        }
         }
       this.displayChart = this.displayChart.bind(this);
     }
@@ -54,19 +69,27 @@ class Holdings extends Component {
             return noData;
         }
         else {
-            
+            let mapping = [];
+            let options = this.state.options;
+            mapping.options = options;
+            mapping.series = [];
+            options.labels = [];
             let series = holdings.filter(mem => mem.numberOfCoins > 0).map(coin => coin.numberOfCoins);
             let tickers = holdings.filter(mem => mem.numberOfCoins > 0).map(a => a.coin);
-            var totalHoldings = 0;
-            // holdings.map(coin => {
-            //   let coins = coin.numberOfCoins;
-            //   var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
-            //   if (currentPrice != null) {
-            //       totalHoldings += Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
-            //   }
-            // });
+            
+            this.props.holdings.map(coin => {
+              let coins = coin.numberOfCoins;
+              var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
+              if (currentPrice != null) {
+                  var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
+                  mapping.options.labels.push(coin.coin);
+                  mapping.series.push(Number(total.toFixed(2)));
+              }
+          });
+          
+          return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
 
-          return <HoldingsChart className="chart" tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
+          // return <HoldingsChart className="chart" tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
         }
     }
 
@@ -94,14 +117,9 @@ class Holdings extends Component {
 
       return (
         <div className="App">
-        <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
-
-          <div className="dashboard-section section">
-          <div className="rounded-card card z-depth-0">
+        
               { this.displayChart(holdings) }
-              {/* <HoldingsList /> */}
-          </div>
-          </div>
+         
         </div>
       )};
 }
