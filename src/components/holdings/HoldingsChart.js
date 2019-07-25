@@ -15,9 +15,16 @@ class HoldingsChart extends Component {
         data: [],
         options: {
             chart: {
-                height: '100%',
-                width: '100%'
-            },
+                height: 'auto',
+              },
+              responsive: [{
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    height: 300
+                  }
+                }
+              }],
             tooltip: {
                 enabled: true,
                 style: {
