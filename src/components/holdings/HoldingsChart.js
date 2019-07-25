@@ -18,10 +18,10 @@ class HoldingsChart extends Component {
                 height: 'auto',
               },
               responsive: [{
-                breakpoint: 480,
+                breakpoint: 1000,
                 options: {
                   chart: {
-                    height: 300
+                    width: '100%'
                   }
                 }
               }],
