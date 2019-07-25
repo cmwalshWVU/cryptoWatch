@@ -58,7 +58,7 @@ class HoldingsChart extends Component {
                 }
             });
             
-            return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} height="350" type="pie" />
+            return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
         }
     }
 
