@@ -14,6 +14,10 @@ class HoldingsChart extends Component {
       this.state = {
         data: [],
         options: {
+            chart: {
+                height: '100%',
+                width: '100%'
+            },
             tooltip: {
                 enabled: true,
                 style: {
