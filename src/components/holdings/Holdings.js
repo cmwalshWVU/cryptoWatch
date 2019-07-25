@@ -58,26 +58,49 @@ class Holdings extends Component {
             let series = holdings.filter(mem => mem.numberOfCoins > 0).map(coin => coin.numberOfCoins);
             let tickers = holdings.filter(mem => mem.numberOfCoins > 0).map(a => a.coin);
             var totalHoldings = 0;
-            this.props.holdings.map(coin => {
-              let coins = coin.numberOfCoins;
-              var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
-              if (currentPrice != null) {
-                  totalHoldings += Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
-              }
-          });
+            // holdings.map(coin => {
+            //   let coins = coin.numberOfCoins;
+            //   var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
+            //   if (currentPrice != null) {
+            //       totalHoldings += Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
+            //   }
+            // });
 
-          return <HoldingsChart className="chart" total={totalHoldings} tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
+          return <HoldingsChart className="chart" tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
         }
     }
+
+    totalHoldings = (holdings) => {
+      if (holdings === undefined || holdings.length === 0 || holdings.filter(mem => mem.numberOfCoins > 0).length   === 0) {
+          return "N/A";
+      }
+      else {
+        var totalHoldings = 0;
+
+        holdings.map(coin => {
+          let coins = coin.numberOfCoins;
+          var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
+          if (currentPrice != null) {
+              totalHoldings += Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
+          }
+        });
+
+        return totalHoldings.toFixed(2);
+      }
+  }
 
     render() {
       const {  holdings } = this.props;
 
       return (
+        <div className="App">
+        <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
+
           <div className="dashboard-section section">
           <div className="rounded-card card z-depth-0">
               { this.displayChart(holdings) }
               {/* <HoldingsList /> */}
+          </div>
           </div>
         </div>
       )};

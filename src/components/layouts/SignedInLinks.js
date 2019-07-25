@@ -62,14 +62,6 @@ const SignedInLinks = (props) => {
 
   return (
     <ul className="right">
-      <li>
-        <Button
-            variant="contained"
-            className="button"
-          >
-          <NavLink to="/create">New Project</NavLink>
-          </Button>
-      </li>
       <li className="paddingRight">
         <Button
           aria-controls="customized-menu"

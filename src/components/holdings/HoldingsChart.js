@@ -70,7 +70,6 @@ class HoldingsChart extends Component {
 
         return (
             <div className="card-content">
-                <span className="card-title"><center>Holdings: ${this.props.total.toFixed(2)}</center></span>
                 <span><center>{this.lastUpdated()}</center></span>
                 { this.mapTickerHoldings() }
                 {/* <HoldingsList /> */}

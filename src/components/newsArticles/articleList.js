@@ -9,6 +9,7 @@ class ArticleList extends Component {
     newsItems: [],
   }
 
+  
   componentDidMount() {
     fetch('https://mighty-dawn-74394.herokuapp.com/live')
       .then(response => response.json())
@@ -32,8 +33,11 @@ class ArticleList extends Component {
   }
 
   render() {
-   
-    const newsArticles = this.state.newsItems.map((article)  => <Article article={article} id={pushid()} />);
+    let newsArticles = noData;
+    if (this.state.newsItems.length > 0) {
+        newsArticles = this.state.newsItems.map((article)  => <Article article={article} id={pushid()} />);
+    }
+
 
     return (
       <div className="App">
@@ -44,5 +48,18 @@ class ArticleList extends Component {
     );
   }
 }
+
+const noData = (
+    <div className="dashboard-section section">
+          <div className="rounded-card card z-depth-0">
+            <li>
+                <div className="card-content">
+                    <span >No recent news </span>
+                </div>
+            </li>
+          </div>
+        </div>
+    );
+     
 
 export default ArticleList;
