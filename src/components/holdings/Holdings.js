@@ -6,6 +6,7 @@ import HoldingsList from './HoldingsList';
 import '../../styles/card.css';
 import HoldingsChart from './HoldingsChart';
 import ReactApexChart from "react-apexcharts";
+import moment from 'moment';
 
 class Holdings extends Component {
       
@@ -112,19 +113,24 @@ class Holdings extends Component {
       }
   }
 
-    render() {
-      const {  holdings } = this.props;
+  lastUpdated() {
+    return moment().format("lll");
+  } 
 
-      return (
-        <div className="App">
-          <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
+  render() {
+    const {  holdings } = this.props;
 
-          <div className="padding-top card-content grey-text text-darken-3 rounded-card card z-depth-0">
-        
-              { this.displayChart(holdings) }
-          </div>
+    return (
+      <div className="App">
+        <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
+
+        <div className="padding-top card-content grey-text text-darken-3 rounded-card card z-depth-0">
+          <span><center>{this.lastUpdated()}</center></span>
+
+          { this.displayChart(holdings) }
         </div>
-      )};
+      </div>
+    )};
 }
 
 
