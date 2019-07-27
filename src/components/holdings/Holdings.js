@@ -117,9 +117,12 @@ class Holdings extends Component {
 
       return (
         <div className="App">
+          <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
+
+          <div className="padding-top card-content grey-text text-darken-3 rounded-card card z-depth-0">
         
               { this.displayChart(holdings) }
-         
+          </div>
         </div>
       )};
 }

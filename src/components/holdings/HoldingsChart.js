@@ -80,10 +80,12 @@ class HoldingsChart extends Component {
     render() {
 
         return (
-            <div className="card-content">
-                <span><center>{this.lastUpdated()}</center></span>
-                { this.mapTickerHoldings() }
-                {/* <HoldingsList /> */}
+            <div className="rounded-card card z-depth-0 project-summary">
+                <div className="card-content grey-text text-darken-3"> 
+                    <span><center>{this.lastUpdated()}</center></span>
+                    { this.mapTickerHoldings() }
+                    {/* <HoldingsList /> */}
+                </div>
             </div>
       )};
 }
