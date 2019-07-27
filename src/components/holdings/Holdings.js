@@ -96,12 +96,8 @@ class Holdings extends Component {
         <div className="App">
         <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
 
-          <div className="dashboard-section section">
-          <div className="rounded-card card z-depth-0">
               { this.displayChart(holdings) }
               {/* <HoldingsList /> */}
-          </div>
-          </div>
         </div>
       )};
 }
