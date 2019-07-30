@@ -36,6 +36,12 @@ class HoldingsChart extends Component {
                   }
                 }
             },
+            dataLabels: {
+                enabled: true,
+                style: {
+                    fontSize: '20px',
+                }
+            },
             legend: {
                 position: 'bottom',
                     fontSize: '20px',
