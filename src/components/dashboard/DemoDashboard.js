@@ -103,14 +103,6 @@ class DemoDashboard extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
-
-  return {
-    auth: state.firebase.auth
-  }
-}
-
 export default compose(
-  connect(mapStateToProps, {getCurrentPrices, getCurrentData})
+  connect(null, {getCurrentPrices, getCurrentData})
 )(DemoDashboard);
