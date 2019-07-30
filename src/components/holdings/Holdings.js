@@ -57,7 +57,7 @@ class Holdings extends Component {
             
             let series = holdings.filter(mem => mem.numberOfCoins > 0).map(coin => coin.numberOfCoins);
             let tickers = holdings.filter(mem => mem.numberOfCoins > 0).map(a => a.coin);
-            var totalHoldings = 0;
+            // var totalHoldings = 0;
             // holdings.map(coin => {
             //   let coins = coin.numberOfCoins;
             //   var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
@@ -94,10 +94,9 @@ class Holdings extends Component {
 
       return (
         <div className="App">
-        <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
-
-              { this.displayChart(holdings) }
-              {/* <HoldingsList /> */}
+          <center><h5 className="App-title">Current Holdings: ${this.totalHoldings(holdings)}</h5></center>
+          { this.displayChart(holdings) }
+          {/* <HoldingsList /> */}
         </div>
       )};
 }
