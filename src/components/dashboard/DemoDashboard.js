@@ -76,28 +76,28 @@ class DemoDashboard extends Component {
     
         return (
             <div>
-            <div>
-                <Tickers />
-            </div>
-            <div className="dashboard container">
-                <div className="row">
-                <div className="col s12 m6">
-                    <ArticleList  />
+                <div>
+                    <Tickers />
                 </div>
-                    <div className="col s12 m5 offset-m1">
-                        <div className="App">
-                            <center><h5 className="App-title">Current Holdings: <NavLink to="/signin">Log In</NavLink>/<NavLink to="/signup">Sign Up</NavLink> </h5></center>
-                            <div className="dashboard-section section rounded-card card z-depth-0 card-content">
-                                <span><center>Last updated: {this.lastUpdated()}</center></span>
-                                <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
-                                <h6 ><center><NavLink to="/signin">Log In</NavLink> / <NavLink to="/signup">Sign Up</NavLink> to track actual holdings in real time</center></h6>
+                <div className="dashboard container">
+                    <div className="row">
+                    <div className="col s12 m6">
+                        <ArticleList  />
+                    </div>
+                        <div className="col s12 m5 offset-m1">
+                            <div className="App">
+                                <center><h5 className="App-title">Current Holdings: <NavLink to="/signin">Log In</NavLink>/<NavLink to="/signup">Sign Up</NavLink> </h5></center>
+                                <div className="dashboard-section section rounded-card card z-depth-0 card-content">
+                                    <span><center>Last updated: {this.lastUpdated()}</center></span>
+                                    <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
+                                    <h6 ><center><NavLink to="/signin">Log In</NavLink> / <NavLink to="/signup">Sign Up</NavLink> to track actual holdings in real time</center></h6>
+                                </div>
+                                
                             </div>
-                            
+                
                         </div>
-            
                     </div>
                 </div>
-            </div>
             </div>
         )
     }
