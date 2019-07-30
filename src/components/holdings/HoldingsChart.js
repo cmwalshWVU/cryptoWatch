@@ -80,7 +80,7 @@ class HoldingsChart extends Component {
     render() {
 
         return (
-            <div className="card-content">
+            <div className="dashboard-section section rounded-card card z-depth-0 card-content">
                 <span><center>{this.lastUpdated()}</center></span>
                 { this.mapTickerHoldings() }
                 {/* <HoldingsList /> */}
