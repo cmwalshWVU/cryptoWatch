@@ -90,7 +90,7 @@ class DemoDashboard extends Component {
                                 <div className="dashboard-section section rounded-card card z-depth-0 card-content">
                                     <span><center>Last updated: {this.lastUpdated()}</center></span>
                                     <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
-                                    <h6 ><center><NavLink to="/signin">Log In</NavLink> / <NavLink to="/signup">Sign Up</NavLink> to track actual holdings in real time</center></h6>
+                                    <h6 ><center><NavLink to="/signin">Log In</NavLink> / <NavLink to="/signup">Sign Up</NavLink> to track your holdings in real time</center></h6>
                                 </div>
                                 
                             </div>
