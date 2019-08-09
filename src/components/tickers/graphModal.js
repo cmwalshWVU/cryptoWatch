@@ -61,12 +61,13 @@ class GraphModal extends Component {
           <div className={clazz}>
             <h4>{this.props.name} Data</h4>
             <PriceHistoryChart className={clazz} ticker={this.props.ticker}/>
+            <div className="modal-footer">
+              <a href="#" className="greyButton modal-close waves-effect btn">
+                Close
+              </a>
+            </div>
           </div>
-          <div className="modal-footer">
-            <a href="#" className="modal-close waves-effect waves-grey btn-flat">
-              Close
-            </a>
-          </div>
+          
         </div>
       </>
     );

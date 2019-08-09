@@ -1,3 +1,13 @@
-.graph { color:dimgrey } /* Globally */
+.graph {  
+    width: 95%;
+    height: 80% !important;
+    color:dimgrey 
+} /* Globally */
 
 .modal { z-index: 100000}
+
+.modal-content {
+    padding: 1.5% !important;
+}
+
+.greyButton { background-color: #536DFE; color: white}
