@@ -9,6 +9,16 @@ import CreateProject from './components/projects/CreateProject';
 import CreateTransaction from './components/transactions/CreateTransaction';
 import CreateCoinTransaction from './components/transactions/CreateCoinTransaction';
 
+const handleAuthentication = (props) => {
+  console.log("Attempting redirect")
+  axios.post(`https://us-central1-crypto-watch-dbf71.cloudfunctions.net/token`, { props })
+      .then(res => {
+          console.log(res);
+          console.log(res.data);
+      })
+
+}
+
 function App()  {
   return (
     <BrowserRouter>
@@ -22,7 +32,11 @@ function App()  {
           <Route path="/create" component={CreateProject} />
           <Route path="/record" component={CreateTransaction} />
           <Route path="/coinRecord" component={CreateCoinTransaction} />
-
+          <Route path="/redireect" render={(props) => {
+            handleAuthentication(props);
+            <Redirect to='/' />}
+            }
+          />
         </Switch>
       </div>
     </BrowserRouter>
