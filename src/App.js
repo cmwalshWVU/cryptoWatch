@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
 import NavBar from './components/layouts/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import ProjectDetails from './components/projects/ProjectDetails';
@@ -8,6 +8,7 @@ import SignUp from './components/auth/SignUp';
 import CreateProject from './components/projects/CreateProject';
 import CreateTransaction from './components/transactions/CreateTransaction';
 import CreateCoinTransaction from './components/transactions/CreateCoinTransaction';
+import axios from 'axios';
 
 const handleAuthentication = (props) => {
   console.log("Attempting redirect")
@@ -34,7 +35,7 @@ function App()  {
           <Route path="/coinRecord" component={CreateCoinTransaction} />
           <Route path="/redireect" render={(props) => {
             handleAuthentication(props);
-            <Redirect to='/' />}
+            return <Redirect to='/' />}
             }
           />
         </Switch>
