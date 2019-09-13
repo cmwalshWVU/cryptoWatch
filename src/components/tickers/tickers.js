@@ -29,11 +29,21 @@ class Tickers extends Component {
 
 		return (
             <div >
-                <ul className="tickers">{!this.state.isLoading ? tickers : null}</ul>
+                <ul className="tickers">{!this.state.isLoading ? tickers : noData}</ul>
             </div>
 		);
 	}
 }
+
+const noData = (
+    <div className="dashboard-section section">
+		<div className="rounded-card card z-depth-0">
+			<div className="card-content">
+				<span >Loading Ticker Data... </span>
+			</div>
+		</div>
+	</div>
+);
 
 const mapStateToProps = (state) => {
 	console.log(state);

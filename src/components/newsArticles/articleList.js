@@ -3,50 +3,38 @@ import Pusher from 'pusher-js';
 import pushid from 'pushid';
 import '../../styles/card.css';
 import Article from './article.js';
+import { connect } from 'react-redux';
 
 class ArticleList extends Component {
-  state = {
-    newsItems: [],
-  }
 
-  
-  componentDidMount() {
-    fetch('https://mighty-dawn-74394.herokuapp.com/live')
-      .then(response => response.json())
-      .then(articles => {
-        this.setState({
-          newsItems: [...this.state.newsItems, ...articles],
+    componentDidMount() {
+        const pusher = new Pusher('5994b268d4758d733605', {
+            cluster: 'us2',
+            encrypted: true,
         });
-      }).catch(error => console.log(error));
 
-    const pusher = new Pusher('5994b268d4758d733605', {
-      cluster: 'us2',
-      encrypted: true,
-    });
-
-    const channel = pusher.subscribe('news-channel');
-    channel.bind('update-news', data => {
-      this.setState({
-        newsItems: [...data.articles, ...this.state.newsItems],
-      });
-    });
-  }
-
-  render() {
-    let newsArticles = noData;
-    if (this.state.newsItems.length > 0) {
-        newsArticles = this.state.newsItems.map((article)  => <Article article={article} id={pushid()} />);
+        const channel = pusher.subscribe('news-channel');
+        channel.bind('update-news', data => {
+            this.setState({
+                newsArticles: [...data.articles, ...this.props.newsArticles],
+            });
+        });
     }
 
+    render() {
+        let newsArticles = noData;
+        if (this.props.newsArticles && this.props.newsArticles.length > 0) {
+            newsArticles = this.props.newsArticles.map((article)  => <Article article={article} id={pushid()} />);
+        }
 
-    return (
-      <div className="App">
-        <center><h5 className="App-title">Recent Crypto News</h5></center>
+        return (
+            <div className="App">
+                <center><h5 className="App-title">Recent Crypto News</h5></center>
 
-        <ul className="news-items">{newsArticles}</ul>
-      </div>
-    );
-  }
+                <ul className="news-items">{newsArticles}</ul>
+            </div>
+        );
+    }
 }
 
 const noData = (
@@ -61,5 +49,11 @@ const noData = (
         </div>
     );
      
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+        newsArticles: state.news.newsArticles,
+    }
+}
 
-export default ArticleList;
+export default connect(mapStateToProps)(ArticleList);

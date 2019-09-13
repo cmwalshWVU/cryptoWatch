@@ -1,5 +1,4 @@
 import React from 'react'
-import { isTemplateElement } from '@babel/types';
 import moment from 'moment';
 import '../../styles/card.css';
 

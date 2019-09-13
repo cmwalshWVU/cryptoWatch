@@ -12,11 +12,7 @@ class PriceHistoryChart extends React.Component {
 
         this.state = {
             chartData:null,
-            options: {
-                title: {
-                text: 'Price History',
-                align: 'center'
-                },
+            options: {  
                 xaxis: {
                     type: 'datetime',
                     tooltip: {
@@ -29,7 +25,7 @@ class PriceHistoryChart extends React.Component {
                 yaxis: {
                     labels: {
                         formatter: function (value) {
-                        return "$" + value.toFixed(4);
+                        return "$" + value.toFixed(2);
                         }
                     },
                     tooltip: {
@@ -62,22 +58,21 @@ class PriceHistoryChart extends React.Component {
             }
             ]
             prices.push({data});
-            }
-            else {
-                let data = [];
-                this.props.graphData.Data.forEach(function(x){
-                    var obj = {};
-                    obj.x = new Date(x.time * 1000).toLocaleString();
-                    obj.y = [x.open, x.high, x.low, x.close];
-                    data.push(obj);
-                });
-                prices.push({data});
-            }
-            return (
-                <div id="chart">
-                    <CandleStickChart className="chart" options={this.state.options} series={prices} type="candlestick" height="350" />
-                    <small className="last-updated">Last Updated: {this.lastUpdated()}</small>
-                </div>
+        }
+        else {
+            let data = [];
+            this.props.graphData.Data.forEach(function(x){
+                var obj = {};
+                obj.x = new Date(x.time * 1000).toLocaleString();
+                obj.y = [x.open, x.high, x.low, x.close];
+                data.push(obj);
+            });
+            prices.push({data});
+        }
+        return (
+            <div id="chart">
+                <CandleStickChart className="chart" options={this.state.options} series={prices} type="candlestick" />
+            </div>
         );
     }
 }
