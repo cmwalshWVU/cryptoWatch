@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import '../../styles/card.css';
 import axios from 'axios';
 
-class CreateTransaction extends Component {
+class CoinbaseSignin extends Component {
     
     constructor(props) {
         super(props);
@@ -50,4 +50,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(CreateTransaction);
+export default connect(null, mapDispatchToProps)(CoinbaseSignin);
