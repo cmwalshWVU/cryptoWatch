@@ -3,6 +3,7 @@ import { recordTransaction } from '../store/actions/transactionAction';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import '../../styles/card.css';
+import axios from 'axios';
 
 class CreateTransaction extends Component {
     
@@ -49,4 +50,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTransaction);
+export default connect(null, mapDispatchToProps)(CreateTransaction);
