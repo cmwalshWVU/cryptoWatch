@@ -29,7 +29,7 @@ class CoinbaseSignin extends Component {
     render() {
         const { coinbaseAuth } = this.state;
 
-        // this.handleToken(this.props);
+        this.handleToken(this.props);
 
         if (coinbaseAuth) {
             return <Redirect to='/' />
