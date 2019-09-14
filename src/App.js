@@ -9,6 +9,7 @@ import CreateProject from './components/projects/CreateProject';
 import CreateTransaction from './components/transactions/CreateTransaction';
 import CreateCoinTransaction from './components/transactions/CreateCoinTransaction';
 import axios from 'axios';
+import CoinbaseSignin from './components/auth/CoinbaseSignin';
 
 const handleAuthentication = (props) => {
   console.log("Attempting redirect")
@@ -33,11 +34,13 @@ function App()  {
           <Route path="/create" component={CreateProject} />
           <Route path="/record" component={CreateTransaction} />
           <Route path="/coinRecord" component={CreateCoinTransaction} />
-          <Route path="/redireect" render={(props) => {
+          <Route path="/redireect" component={CoinbaseSignin}
+          />
+          {/* <Route path="/redireect" render={(props) => {
             handleAuthentication(props);
             return <Redirect to='/' />}
             }
-          />
+          /> */}
         </Switch>
       </div>
     </BrowserRouter>
