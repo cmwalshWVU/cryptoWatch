@@ -5,6 +5,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import '../../styles/card.css';
 import moment from 'moment';
+import Button from '@material-ui/core/Button';
+import { NavLink } from 'react-router-dom';
 
 class HoldingsChart extends Component {
       
@@ -79,6 +81,10 @@ class HoldingsChart extends Component {
         }
     }
 
+    login() {
+        const popup = window.open('http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect', '_blank', 'height=700,width=800')
+      }
+
     lastUpdated() {
 	    return moment().format("lll");
 	}
@@ -87,8 +93,17 @@ class HoldingsChart extends Component {
 
         return (
             <div className="dashboard-section section rounded-card card z-depth-0 card-content">
-                <span><center>Last updated: {this.lastUpdated()}</center></span>
+                <span><center>Last updated:{this.lastUpdated()}</center></span>
                 { this.mapTickerHoldings() }
+                <center><Button
+                aria-controls="customized-menu"
+                aria-haspopup="true"
+                variant="contained"
+                className="button"
+                onClick={() => window.open('http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect', '_blank', 'height=700,width=800')}
+                >
+                    Sign in with Coinbase
+                </Button> </center>
                 {/* <HoldingsList /> */}
             </div>
       )};
