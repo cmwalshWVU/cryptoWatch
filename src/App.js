@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
 import NavBar from './components/layouts/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
@@ -11,40 +11,53 @@ import CreateCoinTransaction from './components/transactions/CreateCoinTransacti
 import axios from 'axios';
 import CoinbaseSignin from './components/auth/CoinbaseSignin';
 
-const handleAuthentication = (props) => {
-  console.log("Attempting redirect")
-  axios.post(`https://us-central1-crypto-watch-dbf71.cloudfunctions.net/token`, { props })
-      .then(res => {
-          console.log(res);
-          console.log(res.data);
-      })
+// const handleAuthentication = (props) => {
+//   console.log("Attempting redirect")
+//   axios.post(`https://us-central1-crypto-watch-dbf71.cloudfunctions.net/token`, { props })
+//       .then(res => {
+//           console.log(res);
+//           console.log(res.data);
+//       })
 
-}
+// }
 
-function App()  {
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <NavBar />
-        <Switch>
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/project/:id" component={ProjectDetails} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/create" component={CreateProject} />
-          <Route path="/record" component={CreateTransaction} />
-          <Route path="/coinRecord" component={CreateCoinTransaction} />
-          <Route path="/redireect" component={CoinbaseSignin}
-          />
-          {/* <Route path="/redireect" render={(props) => {
-            handleAuthentication(props);
-            return <Redirect to='/' />}
-            }
-          /> */}
-        </Switch>
-      </div>
-    </BrowserRouter>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      coinbaseAuth: null
+    }
+  }
+
+  setCoinbaseAuth(token) {
+    this.setState({coinbaseAuth: token});
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <NavBar />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/project/:id" component={ProjectDetails} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/create" component={CreateProject} />
+            <Route path="/record" component={CreateTransaction} />
+            <Route path="/coinRecord" component={CreateCoinTransaction} />
+            <Route path="/redireect" component={() => <CoinbaseSignin setCoinbaseAuth={this.setCoinbaseAuth} />}
+            />
+            {/* <Route path="/redireect" render={(props) => {
+              handleAuthentication(props);
+              return <Redirect to='/' />}
+              }
+            /> */}
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

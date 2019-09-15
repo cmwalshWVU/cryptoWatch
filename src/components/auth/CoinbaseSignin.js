@@ -24,6 +24,7 @@ class CoinbaseSignin extends Component {
                 console.log(res);
                 console.log(res.data);
                 this.setState({ coinbaseAuth : true })
+                this.props.setCoinbaseAuth(res.data.authToken)
             })
     
     }

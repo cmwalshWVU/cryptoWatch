@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import '../../styles/card.css';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
-import { NavLink } from 'react-router-dom';
 
 class HoldingsChart extends Component {
       
@@ -100,10 +99,10 @@ class HoldingsChart extends Component {
                 aria-haspopup="true"
                 variant="contained"
                 className="button"
-                onClick={() => window.open('http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect', '_blank', 'height=700,width=800')}
+                onClick={() => window.location.href ='http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect'}
                 >
                     Sign in with Coinbase
-                </Button> </center>
+                </Button></center>
                 {/* <HoldingsList /> */}
             </div>
       )};
