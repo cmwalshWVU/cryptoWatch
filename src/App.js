@@ -29,7 +29,7 @@ class App extends Component {
     }
   }
 
-  setCoinbaseAuth(token) {
+  setCoinbaseAuth = (token) => {
     this.setState({coinbaseAuth: token});
   }
 
