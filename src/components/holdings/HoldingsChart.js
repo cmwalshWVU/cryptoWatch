@@ -95,7 +95,7 @@ class HoldingsChart extends Component {
                 <span><center>Last updated:{this.lastUpdated()}</center></span>
                 { this.mapTickerHoldings() }
                 
-                { this.props.coinbaseAuthToken !== null ? 
+                { this.props.coinbaseAuthToken === null ? 
                 <center><Button
                 aria-controls="customized-menu"
                 aria-haspopup="true"
@@ -105,7 +105,7 @@ class HoldingsChart extends Component {
                 >
                     Sign in with Coinbase
                 </Button></center>
-                : null }
+                : <center><span> Get Wallet </span></center> }
                 {/* <HoldingsList /> */}
             </div>
       )};
