@@ -16,7 +16,7 @@ class CoinbaseSignin extends Component {
     }
 
     handleToken = ( props) => {
-        const code = props.location.search.replace('?code=','');
+        const code = this.props.context.location.search.replace('?code=','');
         console.log("Attempting redirect with code: " + code)
         
         axios.post(`https://us-central1-crypto-watch-dbf71.cloudfunctions.net/token`, { 'code': code })

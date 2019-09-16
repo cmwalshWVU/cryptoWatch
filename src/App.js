@@ -46,7 +46,7 @@ class App extends Component {
             <Route path="/create" component={CreateProject} />
             <Route path="/record" component={CreateTransaction} />
             <Route path="/coinRecord" component={CreateCoinTransaction} />
-            <Route path="/redireect" component={() => <CoinbaseSignin setCoinbaseAuth={this.setCoinbaseAuth} />}
+            <Route path="/redireect" component={(props) => <CoinbaseSignin context={props} setCoinbaseAuth={this.setCoinbaseAuth} />}
             />
             {/* <Route path="/redireect" render={(props) => {
               handleAuthentication(props);
