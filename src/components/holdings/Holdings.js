@@ -66,7 +66,7 @@ class Holdings extends Component {
             //   }
             // });
 
-          return <HoldingsChart className="chart" tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
+          return <HoldingsChart className="chart" coinbaseAuthToken={this.props.coinbaseAuthToken} tickers={tickers} holdings={holdings.filter(mem => mem.numberOfCoins > 0)} series={series} height="350" type="pie" />
         }
     }
 

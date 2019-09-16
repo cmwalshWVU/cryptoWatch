@@ -41,7 +41,7 @@ class Dashboard extends Component {
                 <ArticleList  />
               </div>
               <div className="col s12 m5 offset-m1">
-                <Holdings />
+                <Holdings coinbaseAuthToken={this.props.coinbaseAuthToken} />
                 <TransactionList />
                 <Notifications notifications={notifications}/>
               </div>

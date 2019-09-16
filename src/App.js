@@ -25,12 +25,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      coinbaseAuth: null
+      coinbaseAuthToken: null
     }
   }
 
   setCoinbaseAuth = (token) => {
-    this.setState({coinbaseAuth: token});
+    this.setState({coinbaseAuthToken: token});
   }
 
   render() {
@@ -39,7 +39,7 @@ class App extends Component {
         <div className="App">
           <NavBar />
           <Switch>
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/" component={(props) => <Dashboard {...props} coinbaseAuthToken={this.state.coinbaseAuthToken} />} />
             <Route path="/project/:id" component={ProjectDetails} />
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
