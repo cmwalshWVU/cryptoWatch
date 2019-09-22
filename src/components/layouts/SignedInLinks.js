@@ -115,8 +115,20 @@ const SignedInLinks = (props) => {
             <h3 className="name" >{props.profile.firstName} {props.profile.lastName}</h3>
             <h4 className="name"> {props.profile.email}</h4>
           </div>
+          <MenuItem key="coin" onClick={() => handleClose()}>
+            <ListItemIcon>
+            <i className="material-icons Small paddingRight ">copyright</i>
+              <NavLink className="blackText" to="/coinRecord"><span>Transaction</span></NavLink>
+            </ListItemIcon>
+          </MenuItem>
+          <MenuItem key="dollar" onClick={() => handleClose()}>
+            <ListItemIcon>
+            <i className="material-icons Small">attach_money</i>
+            <NavLink className="blackText" to="/record"><span> Transaction</span></NavLink>
+            </ListItemIcon>
+          </MenuItem>
           <hr/>
-          <MenuItem key="home">
+          <MenuItem key="home" onClick={() => handleClose()}>
             <ListItemIcon>
               <i className="material-icons Small paddingRight">home</i>
               <NavLink className="blackText" to="/"><span> Home</span></NavLink>
@@ -129,36 +141,6 @@ const SignedInLinks = (props) => {
             </ListItemIcon>
           </MenuItem>
         </StyledMenu>
-        {/* <Menu
-          id="long-menu"
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center'}}
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: 150,
-            },
-          }}
-        >
-            <div >
-              <h3 className="name" >{props.profile.firstName} {props.profile.lastName}</h3>
-              <h4 className="name"> {props.profile.email}</h4>
-            </div>
-            <hr/>
-            <MenuItem key="home">
-              <ListItemIcon>
-                <i className="material-icons Small">home</i>
-                <NavLink className="blackText" to="/"><span> Home</span></NavLink>
-              </ListItemIcon>
-            </MenuItem>
-            <MenuItem key={signOut}  onClick={props.signOut} >
-              <span>SignOut</span>
-            </MenuItem>
-            
-        </Menu> */}
       </li>
     </ul>
   )

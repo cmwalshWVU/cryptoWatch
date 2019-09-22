@@ -13,6 +13,7 @@ class HoldingsChart extends Component {
       super(props);
 
       this.state = {
+        wallets: null,
         data: [],
         options: {
             chart: {
@@ -86,8 +87,20 @@ class HoldingsChart extends Component {
 
     lastUpdated() {
 	    return moment().format("lll");
-	}
+	  }
     
+    getWallets = () => {
+      var wallets = this.auth.getIdToken().then(authToken => {
+        const endpoint = 'http://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet';
+        const headers = {'Authorization': 'Bearer ' + authToken }
+        
+        return this.http.get(endpoint, { headers }).toPromise()
+      })
+
+      // var wallets = this.http.get(endpoint, { headers }).toPromise()
+      this.setState({wallets: wallets});
+    }
+
     render() {
 
         return (
@@ -103,9 +116,18 @@ class HoldingsChart extends Component {
                 className="button"
                 onClick={() => window.location.href ='http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect'}
                 >
-                    Sign in with Coinbase
+                  Sign in with Coinbase
                 </Button></center>
-                : <center><span> Get Wallet </span></center> }
+                : <center><Button
+                aria-controls="customized-menu"
+                aria-haspopup="true"
+                variant="contained"
+                className="button"
+                onClick={() => this.getWallets()}
+                >
+                  Get Wallet
+                </Button></center>
+              }
                 {/* <HoldingsList /> */}
             </div>
       )};
