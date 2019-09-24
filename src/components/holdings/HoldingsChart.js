@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import '../../styles/card.css';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 class HoldingsChart extends Component {
       
@@ -90,7 +91,7 @@ class HoldingsChart extends Component {
 	  }
     
     getWallets = () => {
-      const headers = {'Authorization': 'Bearer ' + authToken }
+      const headers = {'Authorization': 'Bearer ' + this.props.coinbaseAuthToken }
 
       axios.get('http://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet', {headers})
         .then(response => {
@@ -108,7 +109,7 @@ class HoldingsChart extends Component {
       // })
 
       // var wallets = this.http.get(endpoint, { headers }).toPromise()
-      this.setState({wallets: wallets});
+      // this.setState({wallets: wallets});
     }
 
     render() {
