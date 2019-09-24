@@ -93,7 +93,7 @@ class HoldingsChart extends Component {
     getWallets = () => {
       const headers = {'Authorization': 'Bearer ' + this.props.coinbaseAuthToken }
 
-      axios.get('http://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet', {headers})
+      axios.get('https://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet', {headers})
         .then(response => {
           console.log(response.data);
           this.setState({wallets: response.data});
