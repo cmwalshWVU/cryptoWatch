@@ -90,12 +90,22 @@ class HoldingsChart extends Component {
 	  }
     
     getWallets = () => {
-      var wallets = this.auth.getIdToken().then(authToken => {
-        const endpoint = 'http://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet';
-        const headers = {'Authorization': 'Bearer ' + authToken }
+      const headers = {'Authorization': 'Bearer ' + authToken }
+
+      axios.get('http://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet', {headers})
+        .then(response => {
+          console.log(response.data);
+          this.setState({wallets: response.data});
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      // var wallets = this.auth.getIdToken().then(authToken => {
+      //   const endpoint = 'http://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet';
+      //   const headers = {'Authorization': 'Bearer ' + authToken }
         
-        return this.http.get(endpoint, { headers }).toPromise()
-      })
+      //   return this.http.get(endpoint, { headers }).toPromise()
+      // })
 
       // var wallets = this.http.get(endpoint, { headers }).toPromise()
       this.setState({wallets: wallets});
