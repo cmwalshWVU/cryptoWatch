@@ -24,9 +24,9 @@ class Dashboard extends Component {
   }
 
   render() {
-    if (this.props.coinbaseAuthToken !== null) {
-      this.props.signInWithCustomToken(this.props.coinbaseAuthToken)
-    }
+    // if (this.props.coinbaseAuthToken !== null) {
+    //   this.props.signInWithCustomToken(this.props.coinbaseAuthToken)
+    // }
     const { projects, notifications, auth } = this.props;
 
     if (!auth.uid) {
