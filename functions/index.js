@@ -17,20 +17,12 @@ admin.initializeApp({
   });
 
 var FIREBASE_CONFIG = {
-    credential: admin.credential.cert(serviceAccount),
-    apiKey: "AIzaSyCSeuITZaO0J9X_tynA1Ja5jgDFZYlmfC0",
-    authDomain: "crypto-watch-dbf71.firebaseapp.com",
-    databaseURL: "https://crypto-watch-dbf71.firebaseio.com",
-    projectId: "crypto-watch-dbf71",
-    storageBucket: "crypto-watch-dbf71.appspot.com",
-    messagingSenderId: "671907255969",
-    appId: "1:671907255969:web:8c860d75a176bb10",
+
   };
 
 firebase.initializeApp(FIREBASE_CONFIG);
 
-const client_secret = "5c819ede9a48742de02964660dc0838e0ce1f4db0b260b7a066c9d6b5cedd8a5";
-const client_id = "86e70b8b6417cb50024d2ced2fe2e6ca16293527e14004432bf508776fa535a3";
+
 const redirect_uri = "https://5d897b2193b4b30007a6c919--unruffled-knuth-55967d.netlify.com/redireect";
 
 const defaultParams = { 
@@ -166,11 +158,16 @@ async function verifyUser(req) {
           console.error(error);
         }
       });
-      const json = JSON.stringify(uid)
-      console.log(`UID token signed in: ${json}`)
+      const json = JSON.stringify(uid.user.uid)
+      const accessToken = JSON.parse(JSON.stringify(uid.user)).stsTokenManager.accessToken
 
-    const verifiedToken = await admin.auth().verifyIdToken(uid)
-    console.log(`UID token verified: ${uid},  userId ${verifiedToken.uid}`)
+      console.log(`UID token signed in: ${json}`)
+      console.log(`Token is : ${accessToken}`)
+
+    const verifiedToken = await admin.auth().verifyIdToken(accessToken)
+    const verifiedTokenJson = JSON.stringify(verifiedToken)
+    console.log(`Verified token: ${verifiedTokenJson}`)
+    console.log(`UID token verified: ${uid.user.uid},  userId ${verifiedToken.uid}`)
     return verifiedToken.uid
 }
 
