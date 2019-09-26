@@ -16,9 +16,6 @@ import { signInWithCustomToken } from '../store/actions/authActions';
 class Dashboard extends Component {
 
   componentDidMount() {
-    if (this.props.coinbaseAuthToken !== null) {
-      this.signInWithCustomToken(this.props.coinbaseAuthToken)
-    }
     this.props.getCurrentPrices();
     this.props.getNewsData();
     // this.props.getCurrentData();
@@ -27,6 +24,10 @@ class Dashboard extends Component {
   }
 
   render() {
+    if (this.props.coinbaseAuthToken !== null) {
+      this.signInWithCustomToken(this.props.coinbaseAuthToken)
+    }
+    
     const { projects, notifications, auth } = this.props;
 
     if (!auth.uid) {
