@@ -25,9 +25,8 @@ class Dashboard extends Component {
 
   render() {
     if (this.props.coinbaseAuthToken !== null) {
-      this.signInWithCustomToken(this.props.coinbaseAuthToken)
+      this.props.signInWithCustomToken(this.props.coinbaseAuthToken)
     }
-    
     const { projects, notifications, auth } = this.props;
 
     if (!auth.uid) {
