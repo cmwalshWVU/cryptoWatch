@@ -14,6 +14,20 @@ export const signIn = (credentials) => {
     }
 }
 
+
+export const signInWithCustomToken = (token) => {
+    return (dispatch, getState, { getFirebase }) => {
+        const firebase = getFirebase();
+        firebase.auth().signInWithCustomToken(token).then((response) => {
+            const accessToken = JSON.parse(JSON.stringify(response.user)).stsTokenManager.accessToken
+            dispatch({ type: 'COINBASE_LOGIN_SUCCESS', token: accessToken});
+        }).catch((err) => {
+            dispatch({ type: 'COINBASE_LOGIN_ERROR', err });
+        })
+    }
+}
+
+
 export const signOut = () => {
     return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase();

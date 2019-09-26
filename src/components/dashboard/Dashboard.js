@@ -11,10 +11,14 @@ import { getCurrentPrices } from '../store/actions/currentPriceAction';
 import { getCurrentData } from '../store/actions/cryptoActions';
 import { getNewsData } from '../store/actions/newsAction';
 import DemoDashboard from './DemoDashboard';
+import { signInWithCustomToken } from '../store/actions/authActions';
 
 class Dashboard extends Component {
 
   componentDidMount() {
+    if (this.props.coinbaseAuthToken !== null) {
+      this.signInWithCustomToken(this.props.coinbaseAuthToken)
+    }
     this.props.getCurrentPrices();
     this.props.getNewsData();
     // this.props.getCurrentData();
@@ -64,7 +68,7 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-  connect(mapStateToProps, {getCurrentPrices, getCurrentData, getNewsData}),
+  connect(mapStateToProps, {getCurrentPrices, getCurrentData, getNewsData, signInWithCustomToken}),
   firestoreConnect(props => [
     { collection: 'projects', orderBy: ['createdAt', 'desc']  },
     { collection: 'notifications', limit: 3,  orderBy: ['time', 'desc'] },
