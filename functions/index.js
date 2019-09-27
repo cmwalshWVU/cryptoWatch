@@ -22,7 +22,8 @@ var FIREBASE_CONFIG = {
 
 firebase.initializeApp(FIREBASE_CONFIG);
 
-
+const client_secret
+const client_id 
 const redirect_uri = "https://5d897b2193b4b30007a6c919--unruffled-knuth-55967d.netlify.com/redireect";
 
 const defaultParams = { 
@@ -38,7 +39,7 @@ exports.redirect = functions.https.onRequest((req, res) => {
     const queryParams = { 
         ...defaultParams,
         response_type: 'code',
-        scope: 'wallet:accounts:read'
+        scope: 'wallet:accounts:read,wallet:addresses:read,wallet:buys:read'
     }
     const endpoint = base + qs.stringify( queryParams )
     console.log('Attempting to redirect to ');
@@ -90,7 +91,7 @@ async function mintAuthToken(req) {
         console.log('Error creating custom token:', error);
       });;
 
-    console.log(`putting token in db for UID: ${uid}` );
+    console.log(`putting token: ${authToken} in db for UID: ${uid}` );
     await admin.firestore().collection('coinbase').doc(`${uid}`).set({ accessToken, refreshToken })
     // await admin.database().ref(`coinbaseTokens/${uid}`).update({ accessToken, refreshToken })
     
@@ -158,7 +159,7 @@ async function verifyUser(req) {
           console.error(error);
         }
       });
-      const json = JSON.stringify(uid.user.uid)
+      const json = JSON.stringify(uid)
       const accessToken = JSON.parse(JSON.stringify(uid.user)).stsTokenManager.accessToken
 
       console.log(`UID token signed in: ${json}`)
@@ -178,10 +179,8 @@ async function updateTokens(uid) {
 
     const base = 'https://api.coinbase.com/oauth/token?';
 
-    const oldRefreshToken = await admin.database()
-                                       .ref(`coinbaseTokens/${uid}`)
-                                       .once('value')
-                                       .then(data => data.val().refreshToken)
+    const oldRefreshToken = await admin.firestore().collection('coinbase').doc(`${uid}`).get().then(doc => { 
+        return doc.data().refreshToken })
                                        
     const queryParams = { 
         ...defaultParams,
@@ -193,6 +192,8 @@ async function updateTokens(uid) {
 
     
     const endpoint = base + qs.stringify( queryParams ) 
+
+    console.log(`Making post request to: ${endpoint}`)
 
     
     const response = await axios.post(endpoint)
