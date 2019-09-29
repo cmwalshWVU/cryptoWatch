@@ -115,8 +115,8 @@ class HoldingsChart extends Component {
     render() {
       const coinbaseHoldings = this.state.wallets !== null ? this.state.wallets.map(coin => {
         return <li key={coin.balance.currency}>
-                <span className="green-text">{coin.balance.currency} </span>
-                <span>Holdings: {coin.balance.amount}</span>
+                <span className="green-text">{coin.balance.currency}: </span>
+                <span>${coin.native_balance.amount}</span>
               </li>
       }) : <li>No Holdings</li>
 
@@ -160,9 +160,9 @@ const mapStateToProps = (state) => {
 	console.log(state);
 	return {
 		currentPrices: state.currentPrices.currentPrices,
-        holdings:  state.firestore.ordered.personalHoldings,
-        auth: state.firebase.auth
-      }
+    holdings:  state.firestore.ordered.personalHoldings,
+    auth: state.firebase.auth
+  }
 }
     
 export default compose(
