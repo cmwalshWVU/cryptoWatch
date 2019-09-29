@@ -113,35 +113,42 @@ class HoldingsChart extends Component {
     }
 
     render() {
+      const coinbaseHoldings = this.state.wallets.map(coin => {
+        return <li key={coin.balance.currency}>
+                <span className="green-text">{coin.balance.currency} </span>
+                <span>Holdings: {coin.balance.amount}</span>
+              </li>
+      })
 
-        return (
-            <div className="dashboard-section section rounded-card card z-depth-0 card-content">
-                <span><center>Last updated:{this.lastUpdated()}</center></span>
-                { this.mapTickerHoldings() }
-                
-                { this.props.coinbaseAuthToken === null ? 
-                <center><Button
-                aria-controls="customized-menu"
-                aria-haspopup="true"
-                variant="contained"
-                className="button"
-                onClick={() => window.location.href ='http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect'}
-                >
-                  Sign in with Coinbase
-                </Button></center>
-                : <center><Button
-                aria-controls="customized-menu"
-                aria-haspopup="true"
-                variant="contained"
-                className="button"
-                onClick={() => this.getWallets()}
-                >
-                  Get Wallet
-                </Button></center>
-              }
-                {/* <HoldingsList /> */}
-            </div>
-      )};
+      return (
+        <div className="dashboard-section section rounded-card card z-depth-0 card-content">
+            <span><center>Last updated:{this.lastUpdated()}</center></span>
+            { this.mapTickerHoldings() }
+            
+            { this.props.coinbaseAuthToken === null ? 
+            <center><Button
+            aria-controls="customized-menu"
+            aria-haspopup="true"
+            variant="contained"
+            className="button"
+            onClick={() => window.location.href ='http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect'}
+            >
+              Sign in with Coinbase
+            </Button></center>
+            : (this.state.wallets === null ? <center><Button
+            aria-controls="customized-menu"
+            aria-haspopup="true"
+            variant="contained"
+            className="button"
+            onClick={() => this.getWallets()}
+            >
+              Get Wallet
+            </Button></center> 
+            : <center><u>Coinbase Holdings</u>{coinbaseHoldings}</center>)
+          }
+        </div>
+      )
+    };
 }
 
 const noData = (<li key="someData">
