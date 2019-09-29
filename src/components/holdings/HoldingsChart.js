@@ -113,12 +113,12 @@ class HoldingsChart extends Component {
     }
 
     render() {
-      const coinbaseHoldings = this.state.wallets.map(coin => {
+      const coinbaseHoldings = this.state.wallets !== null ? this.state.wallets.map(coin => {
         return <li key={coin.balance.currency}>
                 <span className="green-text">{coin.balance.currency} </span>
                 <span>Holdings: {coin.balance.amount}</span>
               </li>
-      })
+      }) : <li>No Holdings</li>
 
       return (
         <div className="dashboard-section section rounded-card card z-depth-0 card-content">
