@@ -2,6 +2,9 @@
     margin-bottom: 0;
 }
 
+.auth-card {
+    max-width: 33%;
+}
 .rounded-card {
     border-radius: 10px;
     box-shadow: 0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A !important;
@@ -16,6 +19,10 @@
      padding-bottom: .25rem !important;
 }
 
+.App-title {
+    font-weight: 500
+}
+
 .buyOrSell label input[type=checkbox]:checked+.lever {
     background-color: green;
 }
@@ -28,10 +35,24 @@
     font-size: 12px;
 }
 
+.card-title {
+    font-weight: 400 !important;
+    margin-bottom: 5px !important;
+}
+
 .thumbnail {
     float: right;
     border-radius: 6px;
     display: flex;
     max-width: 20%;
-  justify-content: center;
+    justify-content: center;
+}
+
+.articleDate {
+    font-weight: 350
+}
+
+.auth-tabs {
+    margin-bottom: 34px;
+    border-bottom: 1px solid grey;
 }

@@ -3,6 +3,8 @@ import './Tickers.css';
 import Cryptocurrency from './cryptocurrency';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import Pusher from 'pusher-js';
+import pushid from 'pushid';
 
 class Tickers extends Component {
 
@@ -10,12 +12,50 @@ class Tickers extends Component {
 		super(props);
 		this.state = {
 			data: [],
-			updateHistory: true
+			updateHistory: true,
+			prices: [],
+			modalOpen: false,
+			ticker: null
 		};
+	}
+
+	componentDidMount() {
+
+		const pusher = new Pusher('5994b268d4758d733605', {
+			cluster: 'us2',
+			encrypted: true
+		});
+	// const pusher = new Pusher({
+	// 	appId: '827235',
+	// 	key: '5994b268d4758d733605',
+	// 	secret: '2b842a1cd8a65cc317f4',
+	// 	cluster: 'us2',
+	// 	encrypted: true
+	// });
+        // const pusher = new Pusher('5994b268d4758d733605', {
+        //     cluster: 'us2',
+        //     encrypted: true,
+        // });
+
+        const channel = pusher.subscribe('news-channel');
+        channel.bind('update-prices', data => {
+			console.log(JSON.stringify(data.prices.Data));
+            this.setState({
+                prices: [...data.prices.Data, ...this.state.prices],
+            });
+        });
 	}
 
 	lastUpdated() {
 	    return moment().format("llll");
+	}
+
+	toggleModal = () => {
+		this.setState({modalOpen: !this.state.modalOpen})
+	}
+
+	setGraphTicker = (ticker) => {
+		this.setState({ticker: ticker})
 	}
 
 	render() {
@@ -24,7 +64,7 @@ class Tickers extends Component {
 		// var wanted = ["bitcoin", "ethereum", "litecoin", "ripple", "neo", "eos", "stellar"];
 		// var result = tickerData.filter(currency => wanted.includes(currency.id));
 		var tickers = top10.map((currency) =>
-			<Cryptocurrency data={currency} key={currency.id} ticker={currency.symbol} />
+			<Cryptocurrency data={currency} key={currency.id} ticker={currency.symbol} toggleModal={this.toggleModal} modalOpen={this.state.modalOpen} />
 		);
 
 		return (

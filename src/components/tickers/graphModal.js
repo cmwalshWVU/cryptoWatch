@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import M from "materialize-css";
 import './graph.css';
 import PriceHistoryChart from './PriceHistoryChart';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
 class GraphModal extends Component {
 
@@ -60,7 +63,7 @@ class GraphModal extends Component {
         bottom-sheet class */}
           <div className={clazz}>
             <h4>{this.props.name} Data</h4>
-            <PriceHistoryChart className={clazz} ticker={this.props.ticker}/>
+            <PriceHistoryChart className={clazz} ticker={this.props.ticker} />
             <div className="modal-footer">
               <a href="#" className="greyButton modal-close waves-effect btn">
                 Close
@@ -73,5 +76,13 @@ class GraphModal extends Component {
     );
   }
 }
+
+
+// const mapStateToProps = (state, ownProps) => {
+//   console.log(state);
+//   return {
+//     history:  state.firestore.ordered.priceHistory,
+//   }
+// }
 
 export default GraphModal;

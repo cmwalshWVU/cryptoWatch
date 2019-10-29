@@ -40,7 +40,7 @@ class CoinbaseSignin extends Component {
         else {
             return (
                 <div className="rounded-card container">
-                    <h5 className="center grey-text text-darken-3">Loading . . . </h5>
+                    <h5 className="center grey-text text-darken-3">Attempting To Log Into Coinbase . . . </h5>
                 </div>
             )
         }

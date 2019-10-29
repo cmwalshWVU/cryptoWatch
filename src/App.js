@@ -4,6 +4,8 @@ import NavBar from './components/layouts/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import ProjectDetails from './components/projects/ProjectDetails';
 import SignIn from './components/auth/SignIn';
+import AuthScreen from './components/auth/AuthScreen';
+
 import SignUp from './components/auth/SignUp';
 import CreateProject from './components/projects/CreateProject';
 import CreateTransaction from './components/transactions/CreateTransaction';
@@ -41,8 +43,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={(props) => <Dashboard {...props} coinbaseAuthToken={this.state.coinbaseAuthToken} />} />
             <Route path="/project/:id" component={ProjectDetails} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
+            <Route path="/signin" component={() => <AuthScreen tab={0} />} />
+            <Route path="/signup" component={() => <AuthScreen tab={1} />} />
             <Route path="/create" component={CreateProject} />
             <Route path="/record" component={CreateTransaction} />
             <Route path="/coinRecord" component={CreateCoinTransaction} />

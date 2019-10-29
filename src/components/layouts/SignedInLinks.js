@@ -6,12 +6,102 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import './Nav.css';
 import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListItemText from '@material-ui/core/ListItemText';
+import CopyrightIcon from '@material-ui/icons/Copyright'
+import HomeIcon from '@material-ui/icons/Home'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import { Link } from "react-router-dom";
 
-const SignedInLinks = (props) => {
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+});
+
+function SignedInLinks(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElStyled, setAnchorElStyled] = React.useState(null);
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    top: false,
+    right: false,
+    bottom: false,
+    left: false,
+  });
+
+
+  const toggleDrawer = (side, open) => event => {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [side]: open });
+  };
+
+
+  const sideList = side => (
+    <div
+      className={classes.list}
+      role="presentation"
+      onClick={toggleDrawer(side, false)}
+      onKeyDown={toggleDrawer(side, false)}
+    >
+      <List>
+        <ListSubheader component="div" id="nested-list-subheader">
+          Transactions
+        </ListSubheader>
+        <ListItem button component={Link} to="/coinRecord">
+          <ListItemIcon>
+            <CopyrightIcon />
+          </ListItemIcon>      
+          <ListItemText primary="# of Coins" > </ListItemText>
+        </ListItem>
+        <ListItem button component={Link} to="/record">
+          <ListItemIcon>
+            <AttachMoneyIcon />
+          </ListItemIcon>      
+          <ListItemText primary="Dollar Amount" > </ListItemText>
+        </ListItem>
+        <Divider />
+        <ListSubheader component="div" id="nested-list-subheader">
+          Navigation
+        </ListSubheader>
+        <ListItem button component={Link} to="/">
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>      
+          <ListItemText primary="Home" > </ListItemText>
+        </ListItem>
+        <ListItem button onClick={props.signOut}>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>      
+          <ListItemText primary="Log Out" > </ListItemText>
+        </ListItem>
+        <Divider />
+        <ListSubheader component="div" id="nested-list-subheader">
+          Account
+        </ListSubheader>
+        <div className="userInfo" >
+          <div className="user-icon btn btn-floating lighten-1">{props.profile.initials}</div>
+        </div>
+          <div className="name"> {props.profile.firstName} {props.profile.lastName}</div>
+          <div className="name"> {props.profile.email}</div>
+          {/* <h4 className="name"> {props.profile.email}</h4> */}
+     </List> 
+    </div>
+  );
 
   function handleClickStyled(event) {
     setAnchorElStyled(event.currentTarget);
@@ -62,7 +152,7 @@ const SignedInLinks = (props) => {
 
   return (
     <ul className="right">
-      <li className="paddingRight">
+      {/* <li className="paddingRight">
         <Button
           aria-controls="customized-menu"
           aria-haspopup="true"
@@ -96,51 +186,26 @@ const SignedInLinks = (props) => {
             </NavLink>
           </StyledMenuItem>
         </StyledMenu>
-      </li>
+      </li> */}
       <li>
-        <div
-        className="btn btn-floating lighten-1"
-          onClick={handleClick}
-        >
-        {props.profile.initials}
-        </div>
-        <StyledMenu
-          id="customized-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <div >
-            <h3 className="name" >{props.profile.firstName} {props.profile.lastName}</h3>
-            <h4 className="name"> {props.profile.email}</h4>
-          </div>
-          <MenuItem key="coin" onClick={() => handleClose()}>
-            <ListItemIcon>
-            <i className="material-icons Small paddingRight ">copyright</i>
-              <NavLink className="blackText" to="/coinRecord"><span>Transaction</span></NavLink>
-            </ListItemIcon>
-          </MenuItem>
-          <MenuItem key="dollar" onClick={() => handleClose()}>
-            <ListItemIcon>
-            <i className="material-icons Small">attach_money</i>
-            <NavLink className="blackText" to="/record"><span> Transaction</span></NavLink>
-            </ListItemIcon>
-          </MenuItem>
-          <hr/>
-          <MenuItem key="home" onClick={() => handleClose()}>
-            <ListItemIcon>
-              <i className="material-icons Small paddingRight">home</i>
-              <NavLink className="blackText" to="/"><span> Home</span></NavLink>
-            </ListItemIcon>
-          </MenuItem>
-          <MenuItem key={signOut}  onClick={props.signOut} >
-            <ListItemIcon>
-              <i className="material-icons Small paddingRight">exit_to_app</i>
-              Sign Out
-            </ListItemIcon>
-          </MenuItem>
-        </StyledMenu>
+      <Button className="menuButton" onClick={toggleDrawer('right', true)}> <i className="material-icons md-16">menu</i></Button>
+          <SwipeableDrawer
+            anchor="right"
+            open={state.right}
+            onClose={toggleDrawer('right', false)}
+            onOpen={toggleDrawer('right', true)}
+          >
+            {sideList('right')}
+            <div  className="drawer-footer" >
+              <Divider className="full-width"/>
+              <div className="close-menu" onClick={toggleDrawer('right', false)} >
+                <ListItemIcon >
+                <i className="material-icons Small">close</i>
+                Close Menu
+                </ListItemIcon>
+              </div>
+            </div>
+          </SwipeableDrawer>
       </li>
     </ul>
   )

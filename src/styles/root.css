@@ -1,3 +1,7 @@
 #root {
     zoom: .9;
 }
+
+.MuiBackdrop-root {
+    background-color: transparent
+}
