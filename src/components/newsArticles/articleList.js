@@ -32,13 +32,12 @@ class ArticleList extends Component {
     render() {
         let newsArticles = noData;
         if (this.state.newsArticles && this.state.newsArticles.length > 0) {
-            newsArticles = this.state.newsArticles.map((article)  => <Article article={article} id={pushid()} />);
+            newsArticles = this.state.newsArticles.sort((a, b) => (a.publishedAt < b.publishedAt) ? 1 : -1).map((article)  => <Article article={article} id={pushid()} />);
         }
 
         return (
             <div className="App">
                 <center><h5 className="App-title">Recent Crypto News</h5></center>
-
                 <ul className="news-items">{newsArticles}</ul>
             </div>
         );
