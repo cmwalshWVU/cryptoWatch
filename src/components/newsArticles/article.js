@@ -3,8 +3,9 @@ import '../../styles/card.css';
 import moment from 'moment';
 
 const Article = ({article, id}) => {
-    let url = article.urlToImage;
-    const date = moment(article.publishedAt).format("llll")
+    let url = article.urlToImage !== undefined ? article.urlToImage : article.imageurl;
+    const date = article.publishedAt !== undefined ? moment(article.publishedAt).format("llll") :
+      moment(article.published_on * 1000).format("llll")
   return (
     <li key={id}>
         <div className="rounded-card card z-depth-0 project-summary">
