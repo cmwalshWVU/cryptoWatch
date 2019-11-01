@@ -4,6 +4,7 @@
 
 .auth-card {
     max-width: 33%;
+    min-width: 275px;
 }
 .rounded-card {
     border-radius: 10px;
