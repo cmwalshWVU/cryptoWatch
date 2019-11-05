@@ -5,13 +5,18 @@ import '../../styles/card.css';
 import Article from './article.js';
 import { connect } from 'react-redux';
 import '../../styles/card.css';
+import Collapse from '@material-ui/core/Collapse'
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Button from '@material-ui/core/Button'
 
 class ArticleList extends Component {
 
     constructor(props) {
 		super(props);
 		this.state = {
-			newsArticles: []
+            newsArticles: [],
+            collapsed: true
 		};
 	}
 
@@ -28,6 +33,19 @@ class ArticleList extends Component {
             });
         });
     }
+    
+    newArray(x,y) {
+        let d = []
+        x.concat(y).forEach(item =>{
+           if (d.find((iterator) => iterator.title  === item.title) === undefined) 
+             d.push(item); 
+        });
+        return d;
+      }
+
+    toggleCollapse = () => {
+        this.setState({collapsed: !this.state.collapsed})
+    }
 
     render() {
         let newsArticles = noData;
@@ -37,7 +55,7 @@ class ArticleList extends Component {
             articles = [...this.state.newsArticles];
         }
         if (this.props.newsArticles !== undefined && this.props.newsArticles !== null && this.props.newsArticles.length > 0) {
-            articles = [...articles, ...this.props.newsArticles]
+            articles = this.newArray(articles, this.props.newsArticles)
         }
         if (articles.length > 0) {
             newsArticles = articles.sort((a, b) => {
@@ -60,8 +78,16 @@ class ArticleList extends Component {
         }
         return (
             <div className="App">
-                <center><h5 className="App-title">Recent Crypto News</h5></center>
-                <ul className="news-items">{newsArticles}</ul>
+                <center><h5 onClick={() => this.toggleCollapse()} className="article-list-title App-title">Recent Crypto News
+                    <Button className="collapse-articles" button >
+                        {this.state.collapsed ? <ExpandLess /> : <ExpandMore />}
+                    </Button></h5>
+                </center>
+                <ul className="news-items">
+                    <Collapse in={this.state.collapsed} >
+                        {newsArticles}
+                    </Collapse>
+                </ul>
             </div>
         );
     }

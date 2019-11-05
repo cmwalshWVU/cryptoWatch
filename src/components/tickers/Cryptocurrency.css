@@ -39,10 +39,10 @@
 }
 
 .cryptocurrency-name {
-	font-size: 1.35rem;
+	font-size: 16px;
 	/* border-bottom: solid .5px; */
 	/* font-family: 'Roboto'; */
-	font-weight: 400;
+	font-weight: 500;
 }
 
 .cryptocurrency-rank {
@@ -50,9 +50,7 @@
 	font-weight: bold;
 }
 
-.percent-change-1h {
-	font-weight: 500;
-}
-.percent-change-24h {
+.percent-change-1h, .percent-change-24h {
+	font-size: 14px;
 	font-weight: 500;
 }

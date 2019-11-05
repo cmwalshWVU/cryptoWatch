@@ -20,6 +20,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import { Link } from "react-router-dom";
+import TransactionDialog from '../transactions/TransactionDialog'
 
 const useStyles = makeStyles({
   list: {
@@ -31,8 +32,6 @@ const useStyles = makeStyles({
 });
 
 function SignedInLinks(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorElStyled, setAnchorElStyled] = React.useState(null);
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -41,6 +40,7 @@ function SignedInLinks(props) {
     left: false,
   });
 
+  const [modalOpen, toggleModal] = React.useState(false)
 
   const toggleDrawer = (side, open) => event => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -49,7 +49,10 @@ function SignedInLinks(props) {
     setState({ ...state, [side]: open });
   };
 
-
+  const toggleTransactionModal = () => {
+    toggleModal(!modalOpen)
+  }
+  
   const sideList = side => (
     <div
       className={classes.list}
@@ -61,13 +64,13 @@ function SignedInLinks(props) {
         <ListSubheader component="div" id="nested-list-subheader">
           Transactions
         </ListSubheader>
-        <ListItem button component={Link} to="/coinRecord">
+        <ListItem button onClick={toggleTransactionModal}>
           <ListItemIcon>
             <CopyrightIcon />
           </ListItemIcon>      
           <ListItemText primary="# of Coins" > </ListItemText>
         </ListItem>
-        <ListItem button component={Link} to="/record">
+        <ListItem button onClick={toggleTransactionModal}>
           <ListItemIcon>
             <AttachMoneyIcon />
           </ListItemIcon>      
@@ -103,111 +106,33 @@ function SignedInLinks(props) {
     </div>
   );
 
-  function handleClickStyled(event) {
-    setAnchorElStyled(event.currentTarget);
-  }
-
-  function handleCloseStyled() {
-    setAnchorElStyled(null);
-  }
-
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
-
-  function handleClose() {
-    setAnchorEl(null);
-  }
-
-  const StyledMenuItem = withStyles(theme => ({
-    root: {
-      '&:focus': {
-        backgroundColor: theme.palette.primary.main,
-        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-          color: theme.palette.common.white,
-        },
-      },
-    },
-  }))(MenuItem);
-
-  const StyledMenu = withStyles({
-    paper: {
-      border: '1px solid #d3d4d5',
-    },
-  })(props => (
-    <Menu
-      elevation={0}
-      getContentAnchorEl={null}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-      {...props}
-    />
-  ));
-
   return (
-    <ul className="right">
-      {/* <li className="paddingRight">
-        <Button
-          aria-controls="customized-menu"
-          aria-haspopup="true"
-          variant="contained"
-          className="button"
-          onClick={handleClickStyled}
-        >
-          <NavLink to='/'>New Transaction</NavLink>
-        </Button>
-        <StyledMenu
-          id="customized-menu"
-          anchorEl={anchorElStyled}
-          keepMounted
-          open={Boolean(anchorElStyled)}
-          onClose={handleCloseStyled}
-        >
-          <StyledMenuItem>
-            <NavLink to="/coinRecord">
-              <ListItemIcon>
-                <i className="material-icons Small paddingRight ">copyright</i>
-                Transaction
-              </ListItemIcon>
-            </NavLink>
-          </StyledMenuItem>
-          <StyledMenuItem>
-            <NavLink to="/record">
-              <ListItemIcon>
-                <i className="material-icons Small">attach_money</i>
-                Transaction
-              </ListItemIcon>
-            </NavLink>
-          </StyledMenuItem>
-        </StyledMenu>
-      </li> */}
-      <li>
-      <Button className="menuButton" onClick={toggleDrawer('right', true)}> <i className="material-icons md-16">menu</i></Button>
-          <SwipeableDrawer
-            anchor="right"
-            open={state.right}
-            onClose={toggleDrawer('right', false)}
-            onOpen={toggleDrawer('right', true)}
-          >
-            {sideList('right')}
-            <div  className="drawer-footer" >
-              <Divider className="full-width"/>
-              <div className="close-menu" onClick={toggleDrawer('right', false)} >
-                <ListItemIcon >
-                <i className="material-icons Small">close</i>
-                Close Menu
-                </ListItemIcon>
+    <div>
+      <TransactionDialog modalOpen={modalOpen} toggleModal={toggleTransactionModal}/>
+      <ul className="right">
+        <li>
+        <Button className="menuButton" onClick={toggleDrawer('right', true)}> <i className="material-icons md-16">menu</i></Button>
+            <SwipeableDrawer
+              anchor="right"
+              open={state.right}
+              onClose={toggleDrawer('right', false)}
+              onOpen={toggleDrawer('right', true)}
+            >
+              {sideList('right')}
+              <div  className="drawer-footer" >
+                <Divider className="full-width"/>
+                <div className="close-menu" onClick={toggleDrawer('right', false)} >
+                  <ListItemIcon >
+                    <i className="material-icons Small">close</i>
+                      Close Menu
+                  </ListItemIcon>
+                </div>
               </div>
-            </div>
-          </SwipeableDrawer>
-      </li>
-    </ul>
+            </SwipeableDrawer>
+        </li>
+      </ul>
+    </div>
+
   )
 }
 

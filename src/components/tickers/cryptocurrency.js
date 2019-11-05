@@ -37,24 +37,24 @@ class Cryptocurrency extends Component {
 		if (this.props.graphData !== undefined) {
 			return (
 				<li className={"cryptocurrency " + (percent_change_1h.indexOf("-") === -1? "positive" : "negative")}>
-						<span className="cryptocurrency-name">{name}</span> <br />
-						<span className="price">${ (+price_usd).toFixed(2) }</span><br />
-						<span className="percent-change-1h">{percent_change_1h}% 1hr</span><br />
-						<span className="percent-change-24h">{percent_change_24h}% 24hrs</span>
-						<Rsi graphData={this.props.graphData} data={[this.props.ticker, 15, false]} />
-						{graph}
+					<div className="cryptocurrency-name">{name}</div>
+					<div className="price">${ (+price_usd).toFixed(2) }</div>
+					<div className="percent-change-1h">{percent_change_1h}% 1hr</div>
+					<div className="percent-change-24h">{percent_change_24h}% 24hrs</div>
+					<Rsi graphData={this.props.graphData} data={[this.props.ticker, 15, false]} />
+					{graph}
 				</li>
 			)
 		}
 		else {
 			return (
 			<li className={"cryptocurrency " + (percent_change_1h.indexOf("-") === -1? "positive" : "negative")}>
-					<span className="cryptocurrency-name">{name}</span> <br />
-					<span className="price">${ (+price_usd).toFixed(2) }</span><br />
-					<span className="percent-change-1h">{percent_change_1h}% 1hr</span><br />
-					<span className="percent-change-24h">{percent_change_24h}% 24hrs</span>
-					<Rsi graphData={this.props.graphData} data={[this.props.ticker, 15, false]} />
-					{graph}
+				<div className="cryptocurrency-name">{name}</div>
+				<div className="price">${ (+price_usd).toFixed(2) }</div>
+				<div className="percent-change-1h">{percent_change_1h}% 1hr</div>
+				<div className="percent-change-24h">{percent_change_24h}% 24hrs</div>
+				<Rsi graphData={this.props.graphData} data={[this.props.ticker, 15, false]} />
+				{graph}
 			</li>
 		)
 		}

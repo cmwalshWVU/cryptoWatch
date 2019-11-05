@@ -37,14 +37,17 @@
 }
 
 .card-title {
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     margin-bottom: 5px !important;
+    font-size: 18px !important
 }
 
 .thumbnail {
     float: right;
     border-radius: 6px;
     display: flex;
+    max-height: 90px;
+    padding-left: 20px;
     max-width: 20%;
     justify-content: center;
 }
@@ -56,4 +59,22 @@
 .auth-tabs {
     margin-bottom: 34px;
     border-bottom: 1px solid grey;
+}
+
+.card-content {
+    padding: 16px !important
+}
+
+.collapse-articles {
+    min-width: 32px !important;
+}
+
+.transaction-form .MuiPaper-root {
+    min-width: 65%;
+    border-radius: 10px !important
+}
+
+.article-list-title {
+    cursor: pointer;
+    width: fit-content;
 }

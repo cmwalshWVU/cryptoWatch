@@ -46,7 +46,7 @@ class AuthScreen extends Component {
         if (auth.uid) return <Redirect to='/' />
         return (            
             <div className="auth-card rounded-card  container">
-                <form onSubmit={this.handleSubmit} className="rounded-card  white">
+                <form onSubmit={this.handleSubmit} className="auth-form rounded-card  white">
                 <Tabs className="auth-tabs" value={this.state.selectedTab} onChange={this.handleTabChange} aria-label="authTabs">
                     <Tab label="Sign In" onClick={() => this.handleTabChange(0)} />
                     <Tab label="Sign Up" onClick={() => this.handleTabChange(1)} />
