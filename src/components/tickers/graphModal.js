@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import M from "materialize-css";
 import './graph.css';
 import PriceHistoryChart from './PriceHistoryChart';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import { compose } from 'redux';
 
 class GraphModal extends Component {
 

@@ -2,9 +2,7 @@ import React from "react";
 import CandleStickChart from 'react-apexcharts';
 import './PriceHistoryChart.css';
 import moment from 'moment';
-import {getGraphData} from '../store/actions/graphAction';
 import Pusher from 'pusher-js';
-import pushid from 'pushid';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -69,7 +67,6 @@ class PriceHistoryChart extends React.Component {
     
     render() {
         let prices = []
-        const history = this.props.history;
         const prop = this.props.ticker + "History";
 
         if(this.props[prop] === undefined) {

@@ -4,7 +4,6 @@ import Cryptocurrency from './cryptocurrency';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import Pusher from 'pusher-js';
-import pushid from 'pushid';
 
 class Tickers extends Component {
 
@@ -25,17 +24,6 @@ class Tickers extends Component {
 			cluster: 'us2',
 			encrypted: true
 		});
-	// const pusher = new Pusher({
-	// 	appId: '827235',
-	// 	key: '5994b268d4758d733605',
-	// 	secret: '2b842a1cd8a65cc317f4',
-	// 	cluster: 'us2',
-	// 	encrypted: true
-	// });
-        // const pusher = new Pusher('5994b268d4758d733605', {
-        //     cluster: 'us2',
-        //     encrypted: true,
-        // });
 
         const channel = pusher.subscribe('news-channel');
         channel.bind('update-prices', data => {

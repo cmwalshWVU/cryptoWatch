@@ -69,12 +69,92 @@
     min-width: 32px !important;
 }
 
+.coinbase-button {
+    background-color: #536DFE !important;
+    color: white !important;
+}
+.coinbase-button:active{
+    background-color: #536DFE !important;
+}
+
+.coinbase-button:focus{
+    background-color:#536DFE !important;
+}
+
 .transaction-form .MuiPaper-root {
-    min-width: 65%;
+    min-width: 33%;
     border-radius: 10px !important
 }
 
 .article-list-title {
     cursor: pointer;
     width: fit-content;
+}
+
+.forgot-password {
+    font-size: 11px;
+    height: 22px;
+    font-weight: 400;
+    background-color: transparent;
+    color: #ec407a;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    line-height: 0;
+    padding: 5px;
+}
+
+.forgot-password:hover {
+    background-color: transparent
+}
+
+.forgot-password-disclaimer {
+    font-size: 11px;
+}
+
+.noData {
+    min-height: 60px;
+}
+.defaultMessage {
+    font-size: 22px;
+    padding-top: 15px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.addHoldings {
+    min-height: 40px;
+    font-size: 16px;
+    padding-top: 5px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.addHoldingsButton {
+    vertical-align: middle;
+    color: #536DFE !important;
+    padding-left: 10px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.holdingsFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center
+}
+
+.lastUpdated {
+    text-align: center;
+    margin-left: auto;
+}
+
+.auth-tab .MuiTab-wrapper {
+    font-weight: 700;
+    font-weight: 700
+}
+
+.auth-tab-icon .MuiTab-wrapper {
+    font-size: 16px;
+    font-weight: 700
 }

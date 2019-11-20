@@ -1,11 +1,7 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from '../store/actions/authActions';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import './Nav.css';
-import { withStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
@@ -101,7 +97,6 @@ function SignedInLinks(props) {
         </div>
           <div className="name"> {props.profile.firstName} {props.profile.lastName}</div>
           <div className="name"> {props.profile.email}</div>
-          {/* <h4 className="name"> {props.profile.email}</h4> */}
      </List> 
     </div>
   );

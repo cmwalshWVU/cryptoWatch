@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { signIn, signUp } from '../store/actions/authActions';
+import { signIn, signUp, forgotPassword } from '../store/actions/authActions';
 import { Redirect } from 'react-router-dom'
 import '../../styles/card.css';
 import Tabs from '@material-ui/core/Tabs';
@@ -32,8 +32,11 @@ class AuthScreen extends Component {
         if (this.state.selectedTab === 0) {
             this.props.signIn(this.state);
         }
-        else {
+        else if (this.state.selectedTab === 1) {
             this.props.signUp(this.state);
+        }
+        else {
+            this.props.forgotPassword(this.state);
         }
     }
 
@@ -68,8 +71,11 @@ class AuthScreen extends Component {
                             { authError ? <p> {authError} </p> : null }
                         </div>
                     </div>
+                    <center>
+                        <button type="button" onClick={() => this.handleTabChange(2)} className="btn forgot-password z-depth-0">Forgot Password?</button>
+                    </center>
                     </>
-                : 
+                : this.state.selectedTab === 1 ?
                 <>
                     {/* <h5 className="grey-text text-darken-3">Sign Up</h5> */}
                     <div className="input-field">
@@ -95,9 +101,23 @@ class AuthScreen extends Component {
                         </div>
                     </div>
                     </>
+                : 
+                <>
+                <div className="input-field">
+                    <label htmlFor="email"> Email</label>
+                    <input type="email" id="email" onChange={this.handleChange}/>
+                </div>
+                <div className="input-field">
+                    <button className="btn pink lighten-1 z-depth-0">Send Email</button>
+                    <div className="red-text center">
+                        { authError ? <p> {authError} </p> : null }
+                    </div>
+                </div>
+                <center><span className="forgot-password-disclaimer grey-text text-darken-3">Password Recovery: An email will be sent to reset the pass for the associated account</span></center>
+
+                </>
                 }
                 </form>
-
             </div>
         )
     }
@@ -113,8 +133,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         signIn: (creds) => dispatch(signIn(creds)),
-        signUp: (newUser) => dispatch(signUp(newUser))
-
+        signUp: (newUser) => dispatch(signUp(newUser)),
+        forgotPassword: (creds) => dispatch(forgotPassword(creds))
     }
 }
 

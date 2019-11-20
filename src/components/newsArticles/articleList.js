@@ -9,6 +9,7 @@ import Collapse from '@material-ui/core/Collapse'
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button'
+import { getNewsData } from '../store/actions/newsAction';
 
 class ArticleList extends Component {
 
@@ -32,6 +33,8 @@ class ArticleList extends Component {
                 newsArticles: [data.articles, ...this.state.newsArticles],
             });
         });
+
+        this.props.getNewsData();
     }
     
     newArray(x,y) {
@@ -112,4 +115,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(ArticleList);
+export default connect(mapStateToProps, {getNewsData})(ArticleList);

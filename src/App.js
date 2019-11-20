@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import NavBar from './components/layouts/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import ProjectDetails from './components/projects/ProjectDetails';
-import SignIn from './components/auth/SignIn';
 import AuthScreen from './components/auth/AuthScreen';
 
-import SignUp from './components/auth/SignUp';
 import CreateProject from './components/projects/CreateProject';
 import CreateTransaction from './components/transactions/CreateTransaction';
 import CreateCoinTransaction from './components/transactions/CreateCoinTransaction';
-import axios from 'axios';
 import CoinbaseSignin from './components/auth/CoinbaseSignin';
 
 // const handleAuthentication = (props) => {

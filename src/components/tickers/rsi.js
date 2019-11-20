@@ -37,7 +37,7 @@ class Rsi extends Component {
   		let currentTime = new Date();
   		let previousTime = new Date(timeStamp);
   		if (this.state.isHourly) {
-  			let currentHours = (new Date).getHours();
+  			let currentHours = (new Date()).getHours();
   			let previousHours = new Date(timeStamp).getHourss();
 			if ((currentHours - previousHours) >= (this.state.interval * 60) && (currentHours - previousHours) >= (this.state.interval * 60 * 2)) {
 				return true;
@@ -46,7 +46,7 @@ class Rsi extends Component {
   		}
   		else {
   			if ((currentTime.getTime() - previousTime.getTime()) >= (60000 * 60)){
-  				let currentMinutes = (new Date).getMinutes();
+  				let currentMinutes = (new Date()).getMinutes();
   				let previousMinutes = new Date(timeStamp).getMinutes();
   				if ((currentMinutes - previousMinutes) >= this.state.interval && (currentMinutes - previousMinutes) <= (this.state.interval * 2)) {
   					return true;

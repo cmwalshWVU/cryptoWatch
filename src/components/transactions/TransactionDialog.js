@@ -54,8 +54,8 @@ class TransactionDialog extends Component {
                     <DialogContent>
                         <form  onSubmit={this.handleSubmit} >
                             <Tabs className="auth-tabs" value={this.state.selectedTab}  aria-label="authTabs">
-                                <Tab label="Coin" onClick={() => this.handleTabChange(0)} />
-                                <Tab label="$" onClick={() => this.handleTabChange(1)} />
+                                <Tab className="auth-tab" label="Coin" onClick={() => this.handleTabChange(0)} />
+                                <Tab className="auth-tab-icon" label="$" onClick={() => this.handleTabChange(1)} />
                             </Tabs>
                             {this.state.selectedTab === 0 ?
                                 <>
