@@ -105,7 +105,7 @@ class HoldingsChart extends Component {
     axios.get('https://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet', {headers})
       .then(response => {
         console.log(response.data);
-        this.setState({wallets: response.data});
+        this.setState({wallets: response.data, loadingWallets: false});
       })
       .catch(error => {
         console.log(error);
