@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/layouts/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import ProjectDetails from './components/projects/ProjectDetails';
@@ -45,7 +45,8 @@ class App extends Component {
             <Route path="/create" component={CreateProject} />
             <Route path="/record" component={CreateTransaction} />
             <Route path="/coinRecord" component={CreateCoinTransaction} />
-            <Route path="/redirect" component={(props) => <CoinbaseSignin {...props} setCoinbaseAuth={this.setCoinbaseAuth} />}
+            <Route path="/redirect" component={(props) => <CoinbaseSignin {...props} setCoinbaseAuth={this.setCoinbaseAuth} />} />
+            <Route component={(props) => <Redirect to={"/"} />} />
             />
             {/* <Route path="/redireect" render={(props) => {
               handleAuthentication(props);

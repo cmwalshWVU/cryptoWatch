@@ -8,6 +8,7 @@ import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import TransactionDialog from '../transactions/TransactionDialog'
+import { updateCoinbaseHolding } from "../store/actions/coinbaseAction"
 
 class HoldingsChart extends Component {
       
@@ -106,6 +107,9 @@ class HoldingsChart extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({wallets: response.data, loadingWallets: false});
+        for (let i = 0; i < response.data.length; i++) {
+          this.props.updateCoinbaseHolding(response.data[i])
+        }
       })
       .catch(error => {
         console.log(error);
@@ -165,14 +169,20 @@ const mapStateToProps = (state) => {
   }
 }
     
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCoinbaseHolding: (holding) => dispatch(updateCoinbaseHolding(holding))
+  }
+}
+
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(props => [
-    { collection: 'holdings',
+      { collection: 'holdings',
         doc: props.auth.uid,
         subcollections: [
             { collection: 'holdings', orderBy: ['lastUpdated', 'desc'] },
         ],
         storeAs: 'personalHoldings'
-        }    
+      }
     ]))(HoldingsChart);
