@@ -108,7 +108,7 @@ class HoldingsChart extends Component {
         console.log(response.data);
         this.setState({wallets: response.data, loadingWallets: false});
         for (let i = 0; i < response.data.length; i++) {
-          this.props.updateCoinbaseHolding(response.data[i])
+          this.props.updateCoinbaseHolding(response.data[i].balance)
         }
       })
       .catch(error => {
