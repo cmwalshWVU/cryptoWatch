@@ -7,7 +7,7 @@ export const updateCoinbaseHolding = (holding) => {
         firestore.collection('cbHoldings').doc(authorId).collection('cbHoldings').doc(holding.currency).set({ holding }).then(() => {
             dispatch({ 
                 type: 'CB_HOLDING_UPDATED', 
-                holding: holding});
+                holding: holding.amount});
         }).catch((err) => {
             dispatch({ type: 'CB_HOLDING_UPDATE_FAILED', err });
         })
