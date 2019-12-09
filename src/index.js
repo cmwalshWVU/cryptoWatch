@@ -15,8 +15,8 @@ import './styles/root.css'
 const store = createStore(rootReducer, 
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
-        reduxFirestore(fbConfig),
-        reactReduxFirebase(fbConfig, { useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true })
+        reduxFirestore(process.env.FB_CONFIG),
+        reactReduxFirebase(process.env.FB_CONFIG, { useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true })
     )
 );
 
