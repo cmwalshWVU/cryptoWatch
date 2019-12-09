@@ -23,7 +23,6 @@ var firebaseConfig = {
     appId: process.env.APP_ID,
 };
 
-console.log(process.env.FB_CONFIG.toString())
 const store = createStore(rootReducer, 
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
