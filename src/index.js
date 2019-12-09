@@ -10,24 +10,13 @@ import thunk from 'redux-thunk';
 import { reduxFirestore, getFirestore } from 'redux-firestore';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import fbConfig from './config/fbConfig';
-import './styles/root.css'
-;
-
-var firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_DATABASE_URL,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-};
+import './styles/root.css';
 
 const store = createStore(rootReducer, 
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
-        reduxFirestore(firebaseConfig),
-        reactReduxFirebase(firebaseConfig, { useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true })
+        reduxFirestore(fbConfig),
+        reactReduxFirebase(fbConfig, { useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true })
     )
 );
 

@@ -3,13 +3,13 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 var firebaseConfig = {
-    apiKey: "AIzaSyCSeuITZaO0J9X_tynA1Ja5jgDFZYlmfC0",
-    authDomain: "crypto-watch-dbf71.firebaseapp.com",
-    databaseURL: "https://crypto-watch-dbf71.firebaseio.com",
-    projectId: "crypto-watch-dbf71",
-    storageBucket: "crypto-watch-dbf71.appspot.com",
-    messagingSenderId: "671907255969",
-    appId: "1:671907255969:web:8c860d75a176bb10",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
   };
 
 firebase.initializeApp(firebaseConfig);
