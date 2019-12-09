@@ -10,16 +10,6 @@ import CreateTransaction from './components/transactions/CreateTransaction';
 import CreateCoinTransaction from './components/transactions/CreateCoinTransaction';
 import CoinbaseSignin from './components/auth/CoinbaseSignin';
 
-// const handleAuthentication = (props) => {
-//   console.log("Attempting redirect")
-//   axios.post(`https://us-central1-crypto-watch-dbf71.cloudfunctions.net/token`, { props })
-//       .then(res => {
-//           console.log(res);
-//           console.log(res.data);
-//       })
-
-// }
-
 class App extends Component {
   constructor() {
     super();
