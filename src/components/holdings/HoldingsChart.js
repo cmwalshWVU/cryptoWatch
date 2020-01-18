@@ -96,7 +96,6 @@ class HoldingsChart extends Component {
   }
     
   toggleModal() {
-    console.log("TEST")
     this.setState({modalOpen: !this.state.modalOpen})
   }
 
@@ -105,7 +104,7 @@ class HoldingsChart extends Component {
     this.setState({loadingWallets: true})
     axios.get('https://us-central1-crypto-watch-dbf71.cloudfunctions.net/wallet', {headers})
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({wallets: response.data, loadingWallets: false});
         for (let i = 0; i < response.data.length; i++) {
           this.props.updateCoinbaseHolding(response.data[i].balance)
@@ -148,12 +147,14 @@ class HoldingsChart extends Component {
                 className="coinbase-button"
                 onClick={() => this.getWallets()}
                 >
-                  Sync Wallets
+                  Sync Coinbase Holdings
               </Button>
             </center> 
           : this.state.loadingWallets === true ? 
             <center><u>Loading Wallets</u></center>
-          : <center><u>Coinbase Holdings</u>{coinbaseHoldings}</center>)
+          : null
+          // <center><u>Coinbase Holdings</u>{coinbaseHoldings}</center>
+          )
         }
       </div>
     )
@@ -161,10 +162,11 @@ class HoldingsChart extends Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log(state);
+	// console.log(state);
 	return {
 		currentPrices: state.currentPrices.currentPrices,
     holdings:  state.firestore.ordered.personalHoldings,
+    cbHoldings:  state.firestore.ordered.cbHoldings,
     auth: state.firebase.auth
   }
 }
@@ -184,5 +186,11 @@ export default compose(
             { collection: 'holdings', orderBy: ['lastUpdated', 'desc'] },
         ],
         storeAs: 'personalHoldings'
+      },
+      { collection: 'cbHoldings',
+        doc: props.auth.uid,
+        subcollections: [
+            { collection: 'cbHoldings' },
+        ]
       }
     ]))(HoldingsChart);

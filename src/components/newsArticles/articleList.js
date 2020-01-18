@@ -47,7 +47,7 @@ class ArticleList extends Component {
       }
 
     toggleCollapse = () => {
-        this.setState({collapsed: !this.state.collapsed})
+        this.setState((state) => { return {collapsed: !state.collapsed}})
     }
 
     render() {
@@ -77,12 +77,12 @@ class ArticleList extends Component {
                 else {
                     return a.published_on < b.published_on ? 1 : -1
                 }
-            }).map((article)  => <Article article={article} id={pushid()} />);
+            }).map((article, index)  => <Article key={index} article={article} id={pushid()} />);
         }
         return (
             <div className="App">
                 <center><h5 onClick={() => this.toggleCollapse()} className="article-list-title App-title">Recent Crypto News
-                    <Button className="collapse-articles" button >
+                    <Button className="collapse-articles" >
                         {this.state.collapsed ? <ExpandLess /> : <ExpandMore />}
                     </Button></h5>
                 </center>
@@ -109,7 +109,6 @@ const noData = (
     );
      
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         newsArticles: state.news.newsArticles,
     }

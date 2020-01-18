@@ -36,7 +36,6 @@ class TransactionDialog extends Component {
     }
 
     handleTabChange = (tab) => {
-        console.log("calling reset state")
         this.setState({
             isPurchase: false,
             coin: undefined,
@@ -46,7 +45,6 @@ class TransactionDialog extends Component {
     }
 
     render() {
-        console.log("Modal Open: " +this.props.modalOpen)
         return (
             <div>
                 <Dialog className="transaction-form" open={this.props.modalOpen} onClose={this.props.toggleModal} aria-labelledby="form-dialog-title">
@@ -114,7 +112,7 @@ class TransactionDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+    // console.log(state);
     return {
       auth: state.firebase.auth
     }

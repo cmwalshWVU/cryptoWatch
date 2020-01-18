@@ -107,7 +107,7 @@ class PriceHistoryChart extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
+    // console.log(state);
     const propName = ownProps.ticker + "History"
 	return {
         graphData: state.graph[ownProps.ticker],

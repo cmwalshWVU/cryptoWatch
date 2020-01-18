@@ -62,7 +62,6 @@ class Cryptocurrency extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-	console.log(state);
 	return {
 		graphData: state.graph[ownProps.ticker],
 	}

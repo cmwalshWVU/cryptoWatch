@@ -28,7 +28,6 @@ class AuthScreen extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
         if (this.state.selectedTab === 0) {
             this.props.signIn(this.state);
         }

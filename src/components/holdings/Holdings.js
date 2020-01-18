@@ -63,10 +63,20 @@ class Holdings extends Component {
         return "N/A";
     }
     else {
+      const cbHoldings = []
+      if (this.props.cbHoldings && this.props.cbHoldings[0].cbHoldings) {
+        this.props.cbHoldings[0].cbHoldings.forEach(coin => {
+          cbHoldings[coin.holding.currency] = Number(coin.holding.amount)
+        });
+        // console.log(cbHoldings)
+      }
       var totalHoldings = 0;
 
       holdings.map(coin => {
         let coins = coin.numberOfCoins;
+        if (cbHoldings[coin.coin]) {
+          coins += cbHoldings[coin.coin]
+        }
         var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
         if (currentPrice != null) {
             totalHoldings += Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
@@ -90,10 +100,10 @@ class Holdings extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     holdings:  state.firestore.ordered.personalHoldings,
     currentPrices: state.currentPrices.currentPrices,
+    cbHoldings:  state.firestore.ordered.cbHoldings,
     auth: state.firebase.auth
   }
 }
@@ -102,11 +112,17 @@ export default compose(
   connect(mapStateToProps, {getCurrentPrices}),
   firestoreConnect(props => [
     { collection: 'holdings',
-        doc: props.auth.uid,
-        subcollections: [
-          { collection: 'holdings', orderBy: ['lastUpdated', 'desc'] },
-        ],
-        storeAs: 'personalHoldings'
-      }    
+      doc: props.auth.uid,
+      subcollections: [
+        { collection: 'holdings', orderBy: ['lastUpdated', 'desc'] },
+      ],
+      storeAs: 'personalHoldings'
+    },
+    { collection: 'cbHoldings',
+      doc: props.auth.uid,
+      subcollections: [
+          { collection: 'cbHoldings' },
+      ]
+    }
   ])
 )(Holdings);

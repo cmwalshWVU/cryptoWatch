@@ -55,7 +55,7 @@ const noData = (<li key="someData">
 
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     transactions:  state.firestore.ordered.personalTransactions,
     auth: state.firebase.auth

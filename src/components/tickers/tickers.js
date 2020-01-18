@@ -74,7 +74,6 @@ const noData = (
 );
 
 const mapStateToProps = (state) => {
-	console.log(state);
 	return {
 		currentPrices: state.currentPrices.currentPrices,
 	}
