@@ -55,7 +55,11 @@ class Holdings extends Component {
   }
 
   displayChart = (holdings) => {
-    return <HoldingsChart className="chart" coinbaseAuthToken={this.props.coinbaseAuthToken}  holdings={holdings} height="350" type="pie" />
+    return <HoldingsChart className="chart" 
+      coinbaseAuthToken={this.props.coinbaseAuthToken}  
+      cbHoldings={this.props.cbHoldings} 
+      holdings={holdings} height="350" 
+      type="pie" />
   }
 
   totalHoldings = (holdings) => {

@@ -63,23 +63,57 @@ class HoldingsChart extends Component {
   }
 
   mapTickerHoldings() {
-    if (this.props.currentPrices === undefined || this.props.currentPrices.length === 0 || 
-      this.props.holdings === undefined || this.props.holdings.length === 0 || this.props.holdings.filter(coin => coin.numberOfCoins > 0).length === 0) {
+    if (this.props.currentPrices === undefined || this.props.currentPrices.length === 0) {
+      return <div className="noData">
+              <div className="defaultMessage"> No Current Price Data...</div>
+              <div className="addHoldings">Please Try Again Shortly</div>
+            </div>
+    } else if ((this.props.holdings === undefined || this.props.holdings.length === 0 || this.props.holdings.filter(coin => coin.numberOfCoins > 0).length === 0) && !this.props.cbHoldings) {
       return <div className="noData">
               <div className="defaultMessage"> No Current Holdings...</div>
               <div className="addHoldings">Add your holdings!
               <i className="material-icons addHoldingsButton Small" onClick={() => this.toggleModal()}>library_add</i></div>
             </div>
-    }
-    else {
+    } else if ((this.props.holdings === undefined || this.props.holdings.length === 0 || this.props.holdings.filter(coin => coin.numberOfCoins > 0).length === 0) && this.props.cbHoldings) {
       let mapping = [];
       let options = this.state.options;
       mapping.options = options;
       mapping.series = [];
       options.labels = [];
 
+      if (this.props.cbHoldings && this.props.cbHoldings[0].cbHoldings) {
+        this.props.cbHoldings[0].cbHoldings.map(coin => {
+          if (Number(coin.holding.amount) > 0) {
+            let coins = Number(coin.holding.amount)
+            var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.holding.currency);
+            if (currentPrice != null) {
+                var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.holding.currency).price_usd);
+                mapping.options.labels.push(coin.holding.currency);
+                mapping.series.push(Number(total.toFixed(2)));
+            }
+          }
+        });
+      }
+      return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
+    } else {
+      let mapping = [];
+      let options = this.state.options;
+      mapping.options = options;
+      mapping.series = [];
+      options.labels = [];
+
+      const cbHoldings = []
+      if (this.props.cbHoldings && this.props.cbHoldings[0].cbHoldings) {
+        this.props.cbHoldings[0].cbHoldings.forEach(coin => {
+          cbHoldings[coin.holding.currency] = Number(coin.holding.amount)
+        });
+      }
+
       this.props.holdings.map(coin => {
         let coins = coin.numberOfCoins;
+        if (cbHoldings[coin.coin]) {
+          coins += cbHoldings[coin.coin]
+        }
         var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
         if (currentPrice != null) {
             var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);

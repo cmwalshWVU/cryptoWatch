@@ -39,7 +39,8 @@ exports.redirect = functions.https.onRequest((req, res) => {
     const queryParams = { 
         ...defaultParams,
         response_type: 'code',
-        scope: 'wallet:accounts:read,wallet:addresses:read,wallet:buys:read'
+        scope: 'wallet:accounts:read,wallet:addresses:read,wallet:buys:read',
+        account: 'all'
     }
     const endpoint = base + qs.stringify( queryParams )
     console.log('Attempting to redirect to ');
