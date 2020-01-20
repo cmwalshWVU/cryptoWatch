@@ -14,7 +14,7 @@ body {
   background-color: #F6F7FF !important;
 }
 
-form {
+.auth-form {
   padding: 20px;
   margin-top: 60px;
 }

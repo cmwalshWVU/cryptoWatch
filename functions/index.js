@@ -1,6 +1,213 @@
+const crypto = require('crypto');
+const axios = require('axios');
+const cors = require('cors')({origin: true});
+const qs  = require('querystring');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+const firebase = require('firebase');
+
+
+// admin.initializeApp(functions.config().firebase);
+
+var serviceAccount = require("./key.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://crypto-watch-dbf71.firebaseio.com"
+  });
+
+var FIREBASE_CONFIG = {
+
+  };
+
+firebase.initializeApp(FIREBASE_CONFIG);
+
+const client_secret
+const client_id 
+const redirect_uri = "https://5d897b2193b4b30007a6c919--unruffled-knuth-55967d.netlify.com/redireect";
+
+const defaultParams = { 
+    client_id, 
+    client_secret,
+    redirect_uri
+}
+
+// Coinbase redirect
+exports.redirect = functions.https.onRequest((req, res) => {
+    const base = 'https://www.coinbase.com/oauth/authorize?';
+
+    const queryParams = { 
+        ...defaultParams,
+        response_type: 'code',
+        scope: 'wallet:accounts:read,wallet:addresses:read,wallet:buys:read',
+        account: 'all'
+    }
+    const endpoint = base + qs.stringify( queryParams )
+    console.log('Attempting to redirect to ');
+    res.redirect(endpoint);  
+});
+
+// get coinbase auth token
+exports.token = functions.https.onRequest((req, res) => {
+    cors( req, res, () => { 
+        console.log('calling token');
+        console.log("req: " + req.body.code)
+        return mintAuthToken(req)
+                .then(authToken => {
+                    console.log('AuthToken: ' + authToken);
+                    res.json({ authToken });
+
+                })
+                .catch(err => console.log(err))
+
+    });
+});
+
+// presist auth token
+async function mintAuthToken(req) {
+    const base = 'https://api.coinbase.com/oauth/token?'
+    console.log('calling mint token');
+    // console.log("req: " + qs.stringify(req))
+    const queryParams = { 
+        ...defaultParams,
+        grant_type: 'authorization_code',
+        code: req.body.code
+    }
+
+    const endpoint = base + qs.stringify( queryParams )
+    
+    console.log('calling login to URL: ' + endpoint);
+    const login        = await axios.post(endpoint);
+    const accessToken  = login.data.access_token
+    const refreshToken = login.data.refresh_token
+    
+    console.log('calling get user');
+    const user      = await getCoinbaseUser(accessToken)
+    const uid       = 'coinbase:' + user.id
+
+    console.log('creating custom token for user ID: ' + user.id);
+    const authToken = await admin.auth().createCustomToken(uid).then(
+        console.log("create sucess")
+    ).catch(function(error) {
+        console.log('Error creating custom token:', error);
+      });;
+
+    console.log(`putting token: ${authToken} in db for UID: ${uid}` );
+    await admin.firestore().collection('coinbase').doc(`${uid}`).set({ accessToken, refreshToken })
+    // await admin.database().ref(`coinbaseTokens/${uid}`).update({ accessToken, refreshToken })
+    
+    return authToken
+}
+
+// Retrieve the user account data from Coinbase
+async function getCoinbaseUser(accessToken) {
+    const userUrl = 'https://api.coinbase.com/v2/user';
+    console.log("accessToken: " + accessToken);
+
+    const user = await axios.get(userUrl, { headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/json' } });
+    console.log('found user');
+
+    return user.data.data
+}
+
+// get coinbase users wallet
+exports.wallet = functions.https.onRequest((req, res) => {
+    cors( req, res, () => { 
+
+        return getWallet(req)
+                .then(wallets => res.json(wallets))
+                .catch(err => console.log(err))
+
+    });
+});
+
+
+// Get the user's wallet data from Coinbase
+async function getWallet(req) {
+    const endpoint = 'https://api.coinbase.com/v2/accounts';
+
+    const uid          = await verifyUser(req)
+
+    const accessToken  = await updateTokens(uid) 
+    console.log(`getting accounts: ${accessToken}`)
+
+    const accounts     = await axios.get(endpoint, { headers: { 'Authorization': `Bearer ${accessToken}` } })
+    console.log(`got accounts: ${accounts.data.data}`)
+
+    return accounts.data.data
+}
+
+// Validate the Firebase auth header to authenticate the user
+async function verifyUser(req) {
+    let authToken = req.headers.authorization;
+    authToken = authToken.split('Bearer ')[1]
+    console.log(`verifying user auth token: ${authToken}`)
+    // console.log(`Wallet: Logging in with custom token ${authToken}`)
+
+    // const userId = await firebase.auth().signInWithCustomToken(authToken).then(
+    //     console.log("Wallet: Logged in")
+    //     ).catch(function(error) {
+    //         console.log('Error creating custom token:', error);
+    //     });;
+
+    const uid = await firebase.auth().signInWithCustomToken(authToken).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/invalid-custom-token') {
+            console.error('The token you provided is not valid.');
+        } else {
+          console.error(error);
+        }
+      });
+      const json = JSON.stringify(uid)
+      const accessToken = JSON.parse(JSON.stringify(uid.user)).stsTokenManager.accessToken
+
+      console.log(`UID token signed in: ${json}`)
+      console.log(`Token is : ${accessToken}`)
+
+    const verifiedToken = await admin.auth().verifyIdToken(accessToken)
+    const verifiedTokenJson = JSON.stringify(verifiedToken)
+    console.log(`Verified token: ${verifiedTokenJson}`)
+    console.log(`UID token verified: ${uid.user.uid},  userId ${verifiedToken.uid}`)
+    return verifiedToken.uid
+}
+
+
+// Used to update tokens for an authenticated user.
+async function updateTokens(uid) {
+    console.log(`Updating token for UID: ${uid}`)
+
+    const base = 'https://api.coinbase.com/oauth/token?';
+
+    const oldRefreshToken = await admin.firestore().collection('coinbase').doc(`${uid}`).get().then(doc => { 
+        return doc.data().refreshToken })
+                                       
+    const queryParams = { 
+        ...defaultParams,
+        refresh_token: oldRefreshToken,
+        grant_type: 'refresh_token'
+    }
+
+    console.log(`got old refresh token ${oldRefreshToken}`)
+
+    
+    const endpoint = base + qs.stringify( queryParams ) 
+
+    console.log(`Making post request to: ${endpoint}`)
+
+    
+    const response = await axios.post(endpoint)
+
+    const accessToken  = response.data.access_token
+    const refreshToken = response.data.refresh_token
+    console.log(`got new token and updating: ${accessToken}`)
+
+    await admin.firestore().collection('coinbase').doc(`${uid}`).set({ accessToken, refreshToken })
+    console.log(`updated token: ${accessToken}`)
+
+    return accessToken
+}
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
  response.send("Hello from Firebase!");

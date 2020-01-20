@@ -30,8 +30,8 @@
 }
 
 .price {
-	font-size: large;
-	font-weight: bold;
+	font-size: 20px;
+	font-weight: 600;
 }
 
 .cryptocurrency p {
@@ -39,12 +39,18 @@
 }
 
 .cryptocurrency-name {
-	font-size: 1.3rem;
+	font-size: 16px;
 	/* border-bottom: solid .5px; */
-	font-family: 'Roboto'
+	/* font-family: 'Roboto'; */
+	font-weight: 500;
 }
 
 .cryptocurrency-rank {
 	text-align: center;
 	font-weight: bold;
+}
+
+.percent-change-1h, .percent-change-24h {
+	font-size: 14px;
+	font-weight: 500;
 }

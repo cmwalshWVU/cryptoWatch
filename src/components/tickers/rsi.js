@@ -11,19 +11,22 @@ class Rsi extends Component {
 			prices: null,
 			rsi: null,
 			numberOfObjects: 14,
-			previousData: null
+			previousData: null,
+			currentPrices: null
 		};
-		this.db.settings({
-			timestampsInSnapshots: true
-		});
+		// this.db.settings({
+		// 	timestampsInSnapshots: true
+		// });
 	    this._isMounted = false;
 	    this.previousData = null;
 	}
     
 	componentDidMount() {
 		this._isMounted = true;
-	    this.getPrices();
-	    this.interval = setInterval(() => this.getPrices(),  6 * 1000);
+	    // this.getPrices();
+		// this.interval = setInterval(() => this.getPrices(),  6 * 1000);
+		
+		// this.calculateRsi()
 	}
 
 	componentWillUnmount() {
@@ -34,7 +37,7 @@ class Rsi extends Component {
   		let currentTime = new Date();
   		let previousTime = new Date(timeStamp);
   		if (this.state.isHourly) {
-  			let currentHours = (new Date).getHours();
+  			let currentHours = (new Date()).getHours();
   			let previousHours = new Date(timeStamp).getHourss();
 			if ((currentHours - previousHours) >= (this.state.interval * 60) && (currentHours - previousHours) >= (this.state.interval * 60 * 2)) {
 				return true;
@@ -43,7 +46,7 @@ class Rsi extends Component {
   		}
   		else {
   			if ((currentTime.getTime() - previousTime.getTime()) >= (60000 * 60)){
-  				let currentMinutes = (new Date).getMinutes();
+  				let currentMinutes = (new Date()).getMinutes();
   				let previousMinutes = new Date(timeStamp).getMinutes();
   				if ((currentMinutes - previousMinutes) >= this.state.interval && (currentMinutes - previousMinutes) <= (this.state.interval * 2)) {
   					return true;
@@ -91,16 +94,20 @@ class Rsi extends Component {
 	}
 
 	calculateRsi = async () => {
-		if(this.state.currentPrices != null) {
-			let RSI = await BitcoinService.calculateRsi(this.state.currentPrices);
+		if(this.props.graphData !== undefined && this.props.graphData.Data !== undefined) {
+			let RSI = await BitcoinService.calculateRsi(this.props.graphData.Data);
 			this.setState({ rsi: RSI.toFixed(2) });
 		}
 	}
 
 	render() {
+		var rsi = 0
+		if(this.props.graphData !== undefined && this.props.graphData.Data !== undefined) {
+			rsi = BitcoinService.calculateRsi(this.props.graphData.Data).toFixed(2);
+		}
 	  	return (
-	  		<div>
-			<p className="current-rsi"> RSI: {this.state.rsi}</p>
+			  <div>
+			<span className="current-rsi"> RSI: {rsi}</span>
 			</div>
 		);
 	}

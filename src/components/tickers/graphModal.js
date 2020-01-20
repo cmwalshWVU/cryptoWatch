@@ -7,18 +7,6 @@ class GraphModal extends Component {
 
   componentDidMount() {
     const options = {
-      onOpenStart: () => {
-        console.log("Open Start");
-      },
-      onOpenEnd: () => {
-        console.log("Open End");
-      },
-      onCloseStart: () => {
-        console.log("Close Start");
-      },
-      onCloseEnd: () => {
-        console.log("Close End");
-      },
       inDuration: 250,
       outDuration: 250,
       opacity: 0.5,
@@ -32,7 +20,6 @@ class GraphModal extends Component {
     // instance.open();
     // instance.close();
     // instance.destroy();
-    // this.getPricesByTicker(this.props.ticker);
   }
 
   render() {
@@ -60,7 +47,7 @@ class GraphModal extends Component {
         bottom-sheet class */}
           <div className={clazz}>
             <h4>{this.props.name} Data</h4>
-            <PriceHistoryChart className={clazz} ticker={this.props.ticker}/>
+            <PriceHistoryChart className={clazz} ticker={this.props.ticker} />
             <div className="modal-footer">
               <a href="#" className="greyButton modal-close waves-effect btn">
                 Close
@@ -73,5 +60,13 @@ class GraphModal extends Component {
     );
   }
 }
+
+
+// const mapStateToProps = (state, ownProps) => {
+//   console.log(state);
+//   return {
+//     history:  state.firestore.ordered.priceHistory,
+//   }
+// }
 
 export default GraphModal;

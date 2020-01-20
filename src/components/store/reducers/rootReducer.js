@@ -8,9 +8,11 @@ import transactionReducer from './transactionReducer';
 import { combineReducers } from 'redux';
 import { firestoreReducer } from 'redux-firestore';
 import { firebaseReducer } from 'react-redux-firebase';
+import coinbaseReducer from './coinbaseReducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    coinbase: coinbaseReducer,
     crypto: cryptoReducer,
     currentPrices: CurrentPriceReducer,
     graph: graphReducer,

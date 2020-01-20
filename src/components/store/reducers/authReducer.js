@@ -1,6 +1,7 @@
 const initState = {
     authError: null,
-    authSuccess: null
+    authSuccess: null,
+    coinbaseAuth: false
 };
 
 const authReducer = ( state = initState, action ) => {
@@ -12,12 +13,26 @@ const authReducer = ( state = initState, action ) => {
                 authError: 'Login Failed',
                 authSuccess: false
             }
+        case 'COINBASE_LOGIN_ERROR':
+            console.log('Authentication Error', action.err);
+            return {
+                ...state,
+            }
         case 'LOGIN_SUCCESS':
             console.log('Auth Success');
             return {
                 ...state,
                 authError: null,
                 authSuccess: true
+            }
+        case 'COINBASE_LOGIN_SUCCESS':
+            console.log('Coinbase Auth Success');
+            return {
+                ...state,
+                token: action.token,
+                authError: null,
+                authSuccess: true,
+                coinbaseAuth: true
             }
         case 'SIGNOUT_SUCCESS':
             console.log('Signout Success');
@@ -32,7 +47,7 @@ const authReducer = ( state = initState, action ) => {
             console.log('Signup Error');
             return {
                 ...state,
-                authError: action.err.message
+                authError: "Signup Error"
             }
         default:
             return state;
