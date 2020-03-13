@@ -87,7 +87,7 @@ class HoldingsChart extends Component {
             let coins = Number(coin.holding.amount)
             var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.holding.currency);
             if (currentPrice != null) {
-                var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.holding.currency).price_usd);
+                var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.holding.currency).quote.USD.price);
                 mapping.options.labels.push(coin.holding.currency);
                 mapping.series.push(Number(total.toFixed(2)));
             }
@@ -116,11 +116,23 @@ class HoldingsChart extends Component {
         }
         var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
         if (currentPrice != null) {
-            var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).price_usd);
+            var total = Number(coins) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).quote.USD.price);
             mapping.options.labels.push(coin.coin);
             mapping.series.push(Number(total.toFixed(2)));
         }
       });
+      if (this.props.cbHoldings && this.props.cbHoldings[0].cbHoldings) {
+        this.props.cbHoldings[0].cbHoldings.forEach(coin => {
+          if (mapping.options.labels.indexOf(coin.holding.currency === -1)) {
+            var currentPrice = this.props.currentPrices.find(x => x.symbol === coin.coin);
+            if (currentPrice != null) {
+              mapping.options.labels.push(coin.holding.currency);
+              var total = Number(coin.holding.amount) * Number(this.props.currentPrices.find(x => x.symbol === coin.coin).quote.USD.price);
+            }
+          }
+        });
+      }
+
       return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
     }
   }

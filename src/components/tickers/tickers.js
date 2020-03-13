@@ -48,7 +48,7 @@ class Tickers extends Component {
 
 	render() {
 		var tickerData = this.props.currentPrices == null ? this.state.data : this.props.currentPrices;
-		var top10 = tickerData.filter(currency => currency.rank <= 8);
+		var top10 = tickerData.filter(currency => currency.cmc_rank <= 8);
 		// var wanted = ["bitcoin", "ethereum", "litecoin", "ripple", "neo", "eos", "stellar"];
 		// var result = tickerData.filter(currency => wanted.includes(currency.id));
 		var tickers = top10.map((currency) =>
