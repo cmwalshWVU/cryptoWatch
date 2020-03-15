@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import TransactionDialog from '../transactions/TransactionDialog'
 import { updateCoinbaseHolding } from "../store/actions/coinbaseAction"
+import Chart from 'react-apexcharts';
 
 class HoldingsChart extends Component {
       
@@ -63,6 +64,12 @@ class HoldingsChart extends Component {
   }
 
   mapTickerHoldings() {
+    let mapping = [];
+    let options = this.state.options;
+    mapping.options = options;
+    mapping.series = [];
+    options.labels = [];
+    
     if (this.props.currentPrices === undefined || this.props.currentPrices.length === 0) {
       return <div className="noData">
               <div className="defaultMessage"> No Current Price Data...</div>
@@ -75,11 +82,11 @@ class HoldingsChart extends Component {
               <i className="material-icons addHoldingsButton Small" onClick={() => this.toggleModal()}>library_add</i></div>
             </div>
     } else if ((this.props.holdings === undefined || this.props.holdings.length === 0 || this.props.holdings.filter(coin => coin.numberOfCoins > 0).length === 0) && this.props.cbHoldings) {
-      let mapping = [];
-      let options = this.state.options;
-      mapping.options = options;
-      mapping.series = [];
-      options.labels = [];
+      // let mapping = [];
+      // let options = this.state.options;
+      // mapping.options = options;
+      // mapping.series = [];
+      // options.labels = [];
 
       if (this.props.cbHoldings && this.props.cbHoldings[0].cbHoldings) {
         this.props.cbHoldings[0].cbHoldings.map(coin => {
@@ -94,13 +101,14 @@ class HoldingsChart extends Component {
           }
         });
       }
-      return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
+      return mapping
+      // return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
     } else {
-      let mapping = [];
-      let options = this.state.options;
-      mapping.options = options;
-      mapping.series = [];
-      options.labels = [];
+      // let mapping = [];
+      // let options = this.state.options;
+      // mapping.options = options;
+      // mapping.series = [];
+      // options.labels = [];
 
       const cbHoldings = []
       if (this.props.cbHoldings && this.props.cbHoldings[0].cbHoldings) {
@@ -135,9 +143,11 @@ class HoldingsChart extends Component {
             }
           });
         }
-        return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
+        // return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
       }
+      return mapping
     }
+    // return <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" />
   }
 
   lastUpdated() {
@@ -172,41 +182,83 @@ class HoldingsChart extends Component {
             </li>
     }) : <li>No Holdings</li>
 
-    return (
-      <div className="dashboard-section section rounded-card card z-depth-0 card-content">
-        <TransactionDialog modalOpen={this.state.modalOpen} toggleModal={this.toggleModal}/>
-        <div className="holdingsFlex">
-          <div className="lastUpdated">Last updated:{this.lastUpdated()}</div>
-          <i className="material-icons addHoldingsButton Small" onClick={() => this.toggleModal()}>library_add</i>
-        </div>
-        { this.mapTickerHoldings() }
-        
-        { this.props.coinbaseAuthToken === null ? 
-          <center>
-            <Button
-              className="coinbase-button"
-              onClick={() => window.location.href ='http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect'}
-              >
-                Sign in with Coinbase
-            </Button>
-          </center>
-          : (this.state.wallets === null ? 
+    if (this.props.currentPrices === undefined || this.props.currentPrices.length === 0) {
+      return <div className="noData">
+              <div className="defaultMessage"> No Current Price Data...</div>
+              <div className="addHoldings">Please Try Again Shortly</div>
+            </div>
+    } else if ((this.props.holdings === undefined || this.props.holdings.length === 0 || this.props.holdings.filter(coin => coin.numberOfCoins > 0).length === 0) && !this.props.cbHoldings) {
+      return <div className="noData">
+              <div className="defaultMessage"> No Current Holdings...</div>
+              <div className="addHoldings">Add your holdings!
+              <i className="material-icons addHoldingsButton Small" onClick={() => this.toggleModal()}>library_add</i></div>
+            </div>
+            
+    } else {
+      const mapping = this.mapTickerHoldings()
+
+      const options = {
+        chart: {
+          width: 380,
+          type: 'pie',
+        },
+        legend: {
+          fontSize: '14px',
+          position: 'bottom'
+        },
+        labels: mapping.options.labels,
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            // chart: {
+            //   width: 200
+            // },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      };
+
+      return (
+        <div className="dashboard-section section rounded-card card z-depth-0 card-content">
+          <TransactionDialog modalOpen={this.state.modalOpen} toggleModal={this.toggleModal}/>
+          <div className="holdingsFlex">
+            <div className="lastUpdated">Last updated:{this.lastUpdated()}</div>
+            <i className="material-icons addHoldingsButton Small" onClick={() => this.toggleModal()}>library_add</i>
+          </div>
+          {/* <ReactApexChart className="holdings-chart padding" options={mapping.options} series={mapping.series} type="pie" /> */}
+
+          <Chart options={options} series={mapping.series} type="pie" height={350} />
+          {/* { this.mapTickerHoldings() } */}
+          
+          { this.props.coinbaseAuthToken === null ? 
             <center>
               <Button
                 className="coinbase-button"
-                onClick={() => this.getWallets()}
+                onClick={() => window.location.href ='http://us-central1-crypto-watch-dbf71.cloudfunctions.net/redirect'}
                 >
-                  Sync Coinbase Holdings
+                  Sign in with Coinbase
               </Button>
-            </center> 
-          : this.state.loadingWallets === true ? 
-            <center><u>Loading Wallets</u></center>
-          : null
-          // <center><u>Coinbase Holdings</u>{coinbaseHoldings}</center>
-          )
-        }
-      </div>
-    )
+            </center>
+            : (this.state.wallets === null ? 
+              <center>
+                <Button
+                  className="coinbase-button"
+                  onClick={() => this.getWallets()}
+                  >
+                    Sync Coinbase Holdings
+                </Button>
+              </center> 
+            : this.state.loadingWallets === true ? 
+              <center><u>Loading Wallets</u></center>
+            : null
+            // <center><u>Coinbase Holdings</u>{coinbaseHoldings}</center>
+            )
+          }
+        </div>
+      )
+    }
   };
 }
 
