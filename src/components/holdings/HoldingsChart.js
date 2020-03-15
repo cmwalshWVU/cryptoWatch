@@ -202,9 +202,29 @@ class HoldingsChart extends Component {
           width: 380,
           type: 'pie',
         },
+        fill: {
+          type: 'gradient',
+        },
+        dataLabels: {
+          enabled: true,
+          style: {
+              fontSize: '16px',
+          }
+        },
         legend: {
-          fontSize: '14px',
-          position: 'bottom'
+          position: 'bottom',
+          fontSize: '17px',
+        },
+        tooltip: {
+          enabled: true,
+          style: {
+            fontSize: '16px',
+          },
+          y: {
+            formatter: function(val) {
+              return "$" + val
+            }
+          }
         },
         labels: mapping.options.labels,
         responsive: [{
