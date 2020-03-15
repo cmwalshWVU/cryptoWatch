@@ -35,8 +35,8 @@ class Cryptocurrency extends Component {
 				<li className={"cryptocurrency " + (percent_change_1h < 0 ? "negative" : "positive")}>
 					<div className="cryptocurrency-name">{name}</div>
 					<div className="price">${ (+quote.USD.price).toFixed(2) }</div>
-					<div className="percent-change-1h">{quote.USD.percent_change_1h}% 1hr</div>
-					<div className="percent-change-24h">{quote.USD.percent_change_24h}% 24hrs</div>
+					<div className="percent-change-1h">{(quote.USD.percent_change_1h).toFixed(3)}% 1hr</div>
+					<div className="percent-change-24h">{(quote.USD.percent_change_24h).toFixed(3)}% 24hrs</div>
 					<Rsi graphData={this.props.graphData} data={[this.props.ticker, 15, false]} />
 					{graph}
 				</li>
@@ -47,8 +47,8 @@ class Cryptocurrency extends Component {
 			<li className={"cryptocurrency " + (percent_change_1h < 0 ? "negative" : "positive")}>
 				<div className="cryptocurrency-name">{name}</div>
 				<div className="price">${ (+quote.USD.price).toFixed(2) }</div>
-				<div className="percent-change-1h">{quote.USD.percent_change_1h}% 1hr</div>
-				<div className="percent-change-24h">{quote.USD.percent_change_24h}% 24hrs</div>
+				<div className="percent-change-1h">{(quote.USD.percent_change_1h).toFixed(2)}% 1hr</div>
+				<div className="percent-change-24h">{(quote.USD.percent_change_24h).toFixed(2)}% 24hrs</div>
 				<Rsi graphData={this.props.graphData} data={[this.props.ticker, 15, false]} />
 				{graph}
 			</li>
