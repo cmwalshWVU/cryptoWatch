@@ -4756,6 +4756,11 @@ fsevents@^1.2.7:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
 
+fsevents@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.2.tgz#4c0a1fb34bc68e543b4b82a9ec392bfbda840805"
+  integrity sha512-R4wDiBwZ0KzpgOWetKDug1FZcYhqYnUYKtfZYt4mD5SBz76q0KR4Q9o7GIPamsVPGmW3EYPPJ0dOOjvx32ldZA==
+
 function-bind@^1.1.0, function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
@@ -8610,7 +8615,7 @@ punycode@^2.1.0, punycode@^2.1.1:
 pusher-js@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/pusher-js/-/pusher-js-5.0.0.tgz#db4132187c314153f3dc68500a615b836b10bd29"
-  
+
 pusher@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/pusher/-/pusher-2.2.2.tgz#6665b7b0bc7eb82e39dd5903983c28ad85f70362"
