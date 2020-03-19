@@ -118,7 +118,7 @@ class HoldingsChart extends Component {
       }
 
       if (this.props.holdings !== undefined || this.props.cbHoldings !== undefined) {
-        for (let coin in this.props.holdings) {
+        this.props.holdings.forEach(coin => {
           let coins = coin.numberOfCoins;
           if (cbHoldings[coin.coin]) {
             coins += cbHoldings[coin.coin]
@@ -129,7 +129,7 @@ class HoldingsChart extends Component {
               mapping.options.labels.push(coin.coin);
               mapping.series.push(Number(total.toFixed(2)));
           }
-        };
+        });
 
         if (this.props.cbHoldings && this.props.cbHoldings[0].cbHoldings) {
           this.props.cbHoldings[0].cbHoldings.forEach(coin => {
