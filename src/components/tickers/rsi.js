@@ -94,16 +94,16 @@ class Rsi extends Component {
 	}
 
 	calculateRsi = async () => {
-		if(this.props.graphData !== undefined && this.props.graphData.Data !== undefined) {
-			let RSI = await BitcoinService.calculateRsi(this.props.graphData.Data);
+		if(this.props.graphData !== undefined) {
+			let RSI = await BitcoinService.calculateRsi(this.props.graphData);
 			this.setState({ rsi: RSI.toFixed(2) });
 		}
 	}
 
 	render() {
 		var rsi = 0
-		if(this.props.graphData !== undefined && this.props.graphData.Data !== undefined) {
-			rsi = BitcoinService.calculateRsi(this.props.graphData.Data).toFixed(2);
+		if(this.props.graphData !== undefined) {
+			rsi = BitcoinService.calculateRsi(this.props.graphData).toFixed(2);
 		}
 	  	return (
 			  <div>
