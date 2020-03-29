@@ -28,7 +28,7 @@ class BitcoinService {
     let loses = 0;
     let RSI = 0;
     prices = prices.reverse();
-    if (prices != null && prices.length > 1) {
+    if (prices != null && prices.length >= 15) {
       for(let i = 0; i < 15; i++) {
         let change = prices[i].price.close - prices[i].price.open;
         if (change > 0) {

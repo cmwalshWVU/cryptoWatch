@@ -106,7 +106,7 @@ function SignedInLinks(props) {
       <TransactionDialog modalOpen={modalOpen} toggleModal={toggleTransactionModal}/>
       <ul className="right">
         <li>
-        <Button className="menuButton" onClick={toggleDrawer('right', true)}> <i className="material-icons md-16">menu</i></Button>
+        <Button className="menuButton" onClick={toggleDrawer('right', true)}> <i className="menu-button material-icons md-16">menu</i></Button>
             <SwipeableDrawer
               anchor="right"
               open={state.right}

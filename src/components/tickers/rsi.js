@@ -107,7 +107,7 @@ class Rsi extends Component {
 		}
 	  	return (
 			  <div>
-			<span className="current-rsi"> RSI: {rsi}</span>
+			<span className="current-rsi">{rsi}</span>
 			</div>
 		);
 	}

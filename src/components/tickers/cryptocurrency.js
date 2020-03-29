@@ -9,19 +9,19 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 class Cryptocurrency extends Component {
-	
-	constructor(props) {
+    
+    constructor(props) {
         super(props);
 
         this.state = {
-			graphData: [],
+            graphData: [],
             chartData:null,
             rsi: null
         }   
-	}
-	
-	componentDidMount() {
-		const pusher = new Pusher('5994b268d4758d733605', {
+    }
+    
+    componentDidMount() {
+        const pusher = new Pusher('5994b268d4758d733605', {
             cluster: 'us2',
             encrypted: true
             });
@@ -40,58 +40,55 @@ class Cryptocurrency extends Component {
         // this.interval = setInterval(() => this.props.getGraphData(this.props.ticker), 30 * 1000);
     }
 
-	render() {
-		var {
-			name,
-			quote,
-		} = this.props.data;
-		// let props = [symbol, 30, false];
-		// var rsiTicker = <Rsi data={props}  />;
-		let graph = <GraphModal modalOpen={this.props.modalOpen} toggleModal={this.props.toggleModal} name={name} ticker={this.props.ticker} chartData={null} />;
-		const percent_change_1h = quote.USD.percent_change_1h;
+    render() {
+        var { name, quote } = this.props.data;
+        // let props = [symbol, 30, false];
+        // var rsiTicker = <Rsi data={props}  />;
+        let graph = <GraphModal modalOpen={this.props.modalOpen} toggleModal={this.props.toggleModal} name={name} ticker={this.props.ticker} chartData={null} />;
+        const percent_change_1h = quote.USD.percent_change_1h;
 
-		const prop = this.props.ticker + "History";
+        const prop = this.props.ticker + "History";
 
-		if (this.props.graphData !== undefined || this.props[prop] !== undefined) {
-			const data = []
-			if (this.props[prop] !== undefined) {
-				data.push(...this.props[prop])
-			}
-			if (this.props.graphData !== undefined) {
-				data.push(...this.props.graphData)
-			}
-			return (
-				<li className={"cryptocurrency " + (percent_change_1h < 0 ? "negative" : "positive")}>
-					<div className="cryptocurrency-name">{name}</div>
-					<div className="price">${ (+quote.USD.price).toFixed(2) }</div>
-					<div className="percent-change-1h">{(quote.USD.percent_change_1h).toFixed(3)}% 1hr</div>
-					<div className="percent-change-24h">{(quote.USD.percent_change_24h).toFixed(3)}% 24hrs</div>
-					<Rsi graphData={data} data={[this.props.ticker, 15, false]} />
-					{graph}
-				</li>
-			)
-		}
-		else {
-			return (
-			<li className={"cryptocurrency " + (percent_change_1h < 0 ? "negative" : "positive")}>
-				<div className="cryptocurrency-name">{name}</div>
-				<div className="price">${ (+quote.USD.price).toFixed(2) }</div>
-				<div className="percent-change-1h">{(quote.USD.percent_change_1h).toFixed(2)}% 1hr</div>
-				<div className="percent-change-24h">{(quote.USD.percent_change_24h).toFixed(2)}% 24hrs</div>
-				<Rsi graphData={[]} data={[this.props.ticker, 15, false]} />
-				{graph}
-			</li>
-		)
-		}
-	}
+        if (this.props.graphData !== undefined || this.props[prop] !== undefined) {
+            const data = []
+            if (this.props[prop] !== undefined) {
+                data.push(...this.props[prop])
+            }
+            if (this.props.graphData !== undefined) {
+                data.push(...this.props.graphData)
+            }
+            return (
+                <li className={"cryptocurrency " + (percent_change_1h < 0 ? "negative" : "positive")}>
+                    <div className="cryptocurrency-name">{name}</div>
+                    <div className="price">${ (+quote.USD.price).toFixed(2) }</div>
+                    <div className="percent-change-1h">{(quote.USD.percent_change_1h).toFixed(3)}% 1hr</div>
+                    <div className="percent-change-24h">{(quote.USD.percent_change_24h).toFixed(3)}% 24hrs</div>
+                    <Rsi graphData={data} data={[this.props.ticker, 15, false]} />
+                    {graph}
+                </li>
+            )
+        }
+        else {
+            return (
+            <li className={"cryptocurrency " + (percent_change_1h < 0 ? "negative" : "positive")}>
+                <div className="cryptocurrency-name">{name}</div>
+                <div className="price">${ (+quote.USD.price).toFixed(2) }</div>
+                <div className="percent-change-1h">{(quote.USD.percent_change_1h).toFixed(2)}% 1hr</div>
+                <div className="percent-change-24h">{(quote.USD.percent_change_24h).toFixed(2)}% 24hrs</div>
+                <Rsi graphData={[]} data={[this.props.ticker, 15, false]} />
+                {graph}
+            </li>
+        )
+        }
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {
-	const propName = ownProps.ticker + "History"
-	return {
+    const propName = ownProps.ticker + "History"
+    return {
         graphData: state.graph[ownProps.ticker],
-		[propName]:  state.firestore.ordered[propName]
-	}
+        [propName]:  state.firestore.ordered[propName]
+    }
 }
 // export default connect(mapStateToProps, {getGraphData})(Cryptocurrency);
 
