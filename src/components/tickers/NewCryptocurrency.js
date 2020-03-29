@@ -26,7 +26,6 @@ class Cryptocurrency extends Component {
     }
     
     componentDidMount() {
-    console.log("getting data for: " + this.props.ticker)
         const pusher = new Pusher('5994b268d4758d733605', {
             cluster: 'us2',
             encrypted: true
