@@ -64,6 +64,7 @@ class Cryptocurrency extends Component {
             let data = [];
             // console.log(`foreach ${prices.Data}`)
             try {
+                const reversedData = seriesData.reverse()
                 seriesData.forEach((record) => {
                     var obj = {};
                     obj.x = new Date(record.price.time * 1000).toLocaleString();
