@@ -1,5 +1,12 @@
 .navBar {
     background-color: #536DFE;
+    height: 40px !important;
+    line-height: 40px !important
+}
+
+.menu-button {
+    height: 40px !important;
+    line-height: 40px !important
 }
 
 .name {

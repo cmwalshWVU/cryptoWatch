@@ -8,6 +8,68 @@
 	align-items: flex-start;
 }
 
+.ticker-header {
+	padding: 8px 12px 0 !important;
+	margin-bottom: -20px
+}
+
+.MuiCardContent-root {
+	/* margin-bottom: 10px !important */
+}
+
+.ticker-card-items {
+	margin-top: -40px !important;
+}
+
+.MuiGrid-item {
+	text-align: center;
+	font-size: 12px;
+}
+
+.ticker-card {
+	width: 80%;
+	max-width: 200px;
+	margin: 2px;
+}
+
+.ticker-sub-header {
+	display: flex;
+	flex-direction: row;
+}
+
+.ticker-price {
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.positive-change {
+	font-size: 14px;
+	padding-left: 4px;
+	color: #05B169;
+	height: fit-content;
+	align-self: flex-end;
+}
+
+.MuiCardContent-root:last-child {
+	padding-bottom: 10px !important;
+}
+
+.negative-change {
+	font-size: 14px;
+	padding-left: 4px;
+	color: #ff5f67;
+	height: fit-content;
+	align-self: flex-end;
+}
+
+.flex {
+	padding-top: 12px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
 .cryptocurrency {
 	flex-grow: 1;
 	flex-shrink: 1;

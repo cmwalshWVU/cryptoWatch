@@ -136,11 +136,11 @@ class Holdings extends Component {
 
     var total = 0 
     for (let i = 0; i < holdingsList.length; i ++) {
-      console.log(total)
+      // console.log(total)
       // console.log(holdingsList[i].currentPrice)
       let asset = holdingsList[i]
       if (asset.currentPrice !== undefined) {
-        console.log("adding " + asset.amount + " * " + asset.currentPrice.quote.USD.price + " : " +  Number(asset.amount) * Number(asset.currentPrice.quote.USD.price))
+        // console.log("adding " + asset.amount + " * " + asset.currentPrice.quote.USD.price + " : " +  Number(asset.amount) * Number(asset.currentPrice.quote.USD.price))
         total += Number(parseFloat(asset.amount)) * Number(asset.currentPrice.quote.USD.price);
       }
     }
