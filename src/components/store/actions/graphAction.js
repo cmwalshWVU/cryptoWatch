@@ -12,10 +12,24 @@ export function getGraphData(ticker) {
     }
 }
 
+export function setGraphModal(ticker, open) {
+    return(dispatch) =>{
+        dispatch(setModal(ticker, open));
+    }
+}
+
 export function updateGraphData(data, ticker) {
     return {
         type: 'UPDATE_GRAPH',
         data: data,
+        ticker: ticker
+    }
+}
+
+export function setModal(ticker, open) {
+    return {
+        type: 'SET_GRAPH_MODAL',
+        open: open,
         ticker: ticker
     }
 }
