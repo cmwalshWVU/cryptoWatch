@@ -1,6 +1,7 @@
 const initData = [
     {
-
+        open: false,
+        ticker: undefined
     }
 ]
 
@@ -10,6 +11,12 @@ const graphReducer = ( state = initData, action ) => {
             return {
                 ...state,
                 [action.ticker]: action.data
+            }
+        case 'SET_GRAPH_MODAL':
+            return {
+                ...state,
+                ticker: action.ticker,
+                open: action.open
             }
         default:
             return {

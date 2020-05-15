@@ -3,7 +3,7 @@ import './Cryptocurrency.css';
 import Rsi from './rsi.js';
 import GraphModal from './graphModal.js';
 import { connect } from 'react-redux';
-import {getGraphData} from '../store/actions/graphAction';
+import {setGraphModal} from '../store/actions/graphAction';
 import Pusher from 'pusher-js';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -195,7 +195,7 @@ class Cryptocurrency extends Component {
                 data.push(...this.props.graphData)
             }
             return (
-                <Card className="ticker-card">
+                <Card className="ticker-card" onClick={() => this.props.setGraphModal(this.props.ticker, true)} >
                     <CardHeader
                         className={"ticker-header"}
                         avatar={<img className={"icon"} src={icon}/>}
@@ -258,7 +258,7 @@ class Cryptocurrency extends Component {
         )
         } else {
             return (
-                    <Card className="ticker-card">
+                    <Card className="ticker-card" onClick={() => this.props.setGraphModal(this.props.ticker, true)} >
                     <CardHeader
                         className={"ticker-header"}
                         avatar={<img className={"icon"} src={icon}/>}
@@ -333,8 +333,13 @@ const mapStateToProps = (state, ownProps) => {
 }
 // export default connect(mapStateToProps, {getGraphData})(Cryptocurrency);
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setGraphModal: (ticker, open) => dispatch(setGraphModal(ticker, open))
+    }
+}
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(props => [
     { collection: 'priceData',
         doc: 'priceHistory',
