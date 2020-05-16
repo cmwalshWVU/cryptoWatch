@@ -8,6 +8,16 @@
 	align-items: flex-start;
 }
 
+.card-header {
+	display: flex;
+}
+
+.expand-icon {
+	margin-right: 0;
+	margin-left: auto;
+	cursor: pointer;
+}
+
 .ticker-header {
 	padding: 8px 12px 0 !important;
 	margin-bottom: -20px

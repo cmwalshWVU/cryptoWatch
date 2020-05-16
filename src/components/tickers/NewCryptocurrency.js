@@ -12,6 +12,7 @@ import numbro from 'numbro'
 import Chart from 'react-apexcharts';
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
+import OpenInNewIcon from '@material-ui/icons/OpenInNew'
 
 class Cryptocurrency extends Component {
     
@@ -199,7 +200,7 @@ class Cryptocurrency extends Component {
                     <CardHeader
                         className={"ticker-header"}
                         avatar={<img className={"icon"} src={icon}/>}
-                        title={name}
+                        title={<div className={'card-header'} >{name} <OpenInNewIcon className={'expand-icon'} fontSize="small" /></div>}
                         subheader={this.subheader(quote.USD.price, quote.USD.percent_change_24h)}
                         
                     />
@@ -258,7 +259,7 @@ class Cryptocurrency extends Component {
         )
         } else {
             return (
-                    <Card className="ticker-card" onClick={() => this.props.setGraphModal(this.props.ticker, true)} >
+                <Card className="ticker-card" >
                     <CardHeader
                         className={"ticker-header"}
                         avatar={<img className={"icon"} src={icon}/>}
