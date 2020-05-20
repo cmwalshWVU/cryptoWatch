@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Pusher from 'pusher-js';
 import { Grid, Dialog } from '@material-ui/core';
 import {setGraphModal} from '../store/actions/graphAction';
+import  GraphModal from './graphModal.js'
+import TradingViewTickerTape from './TradingViewTickerTape';
 
 class Tickers extends Component {
 
@@ -50,7 +52,7 @@ class Tickers extends Component {
 
     render() {
         var tickerData = !this.props.currentPrices ? this.state.data : this.props.currentPrices;
-        var top10 = tickerData.filter(currency => currency.cmc_rank <= 19 && currency.cmc_rank != 17);
+        var top10 = tickerData.filter(currency => currency.cmc_rank <= 17 && currency.symbol != "TRX");
         // var wanted = ["bitcoin", "ethereum", "litecoin", "ripple", "neo", "eos", "stellar"];
         // var result = tickerData.filter(currency => wanted.includes(currency.id));
         var tickers = top10.map((currency) => {
@@ -70,7 +72,14 @@ class Tickers extends Component {
 	        ); 
 		} else {
 	        return (
-                <div className={"flex"}>{tickers}</div>
+				<> 
+					{ tickerData.length > 10 ?  
+						<TradingViewTickerTape topSymbols={top10.map((it) => it.symbol)} />
+						: null 
+					}
+                	<div className={"flex"}>{tickers}</div>
+					<GraphModal modalOpen={this.props.graphOpen} toggleModal={() => this.props.setGraphModal(undefined, false)} name={this.props.graphTicker} ticker={this.props.graphTicker} chartData={null} />
+				</>
 	        );
 		}
     }

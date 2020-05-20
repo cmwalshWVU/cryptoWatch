@@ -11,3 +11,8 @@
 }
 
 .greyButton { background-color: #536DFE; color: white}
+
+.trading-view-wrapper {
+    min-width: 80vw;
+    height: 70vh;
+}
